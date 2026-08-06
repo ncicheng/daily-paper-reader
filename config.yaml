@@ -25,3 +25,114 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: military-AI
+      description: 请帮我查找军事智能化、军事智能体相关的论文
+      enabled: true
+      paper_sources:
+        - arxiv
+        - biorxiv
+      keywords:
+        - keyword: military intelligent agent
+          keyword_cn: 军事智能体
+          query: military intelligent agent applications and architectures
+        - keyword: military artificial intelligence
+          keyword_cn: 军事人工智能
+          query: artificial intelligence in military operations and strategy
+        - keyword: intelligent warfare
+          keyword_cn: 智能化战争
+          query: intelligent warfare concepts and technologies
+        - keyword: military decision-making
+          keyword_cn: 军事决策
+          query: intelligent support for military decision-making processes
+        - keyword: command and control
+          keyword_cn: 指挥控制
+          query: intelligent command and control systems in military
+        - keyword: situation awareness
+          keyword_cn: 态势感知
+          query: artificial intelligence for military situation awareness
+      intent_queries:
+        - query: research papers on military intelligent agents
+          query_cn: 军事智能体相关研究论文
+          enabled: true
+          source: manual
+          note: ''
+        - query: artificial intelligence applications in military operations
+          query_cn: 人工智能在军事行动中的应用
+          enabled: true
+          source: manual
+          note: ''
+        - query: intelligent warfare and autonomous systems
+          query_cn: 智能化战争与自主系统
+          enabled: true
+          source: manual
+          note: ''
+        - query: military command and control with AI
+          query_cn: 人工智能赋能的军事指挥控制
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-08-06T11:17:06.662Z'
+    - tag: ai-papers
+      description: 为人工智能初学者推荐奠定领域发展的最重要论文，涵盖深度学习、神经网络、Transformer、强化学习等核心方向。
+      enabled: true
+      paper_sources:
+        - arxiv
+        - biorxiv
+      keywords:
+        - keyword: deep learning
+          keyword_cn: 深度学习
+          query: foundational deep learning concepts and landmark papers
+        - keyword: neural network architecture
+          keyword_cn: 神经网络架构
+          query: key neural network architecture designs in artificial intelligence
+        - keyword: transformer model
+          keyword_cn: Transformer模型
+          query: transformer model for sequence processing and attention mechanism
+        - keyword: reinforcement learning
+          keyword_cn: 强化学习
+          query: core reinforcement learning algorithms and principles
+      intent_queries:
+        - query: What are the most influential papers in artificial intelligence for a beginner?
+          query_cn: 人工智能初学者应该读哪些最有影响力的论文？
+          enabled: true
+          source: manual
+          note: ''
+        - query: Foundational AI papers that every student should read
+          query_cn: 每个学生都应该读的AI奠基性论文
+          enabled: true
+          source: manual
+          note: ''
+        - query: Seminal deep learning and neural network papers that shaped AI research
+          query_cn: 塑造AI研究的深度学习和神经网络开创性论文
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-08-06T11:19:48.940Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
+  biorxiv:
+    papers_table: biorxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_biorxiv_papers_exact
+    vector_rpc_exact: match_biorxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_biorxiv_papers_bm25
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq

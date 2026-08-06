@@ -1,0 +1,2061 @@
+Title: An optimal control approach for neural network architecture adaptation with a posteriori error estimation
+
+URL Source: https://arxiv.org/pdf/2607.07637v1
+
+Published Time: Thu, 09 Jul 2026 01:19:42 GMT
+
+Number of Pages: 22
+
+Markdown Content:
+IOP Publishing Journal (2025) Krishnanunni et al 
+
+> PAPER
+
+Crossmark 
+
+> RECEIVED
+
+dd Month yyyy 
+
+> REVISED
+
+dd Month yyyy 
+
+# An optimal control approach for neural network architecture adaptation with a posteriori error estimation 
+
+C G Krishnanunni 1, Thomas Scott 1, Tan Bui-Thanh 1,∗  
+
+> 1Department of Aerospace Engineering & Engineering Mechanics, UT Austin
+> ∗Oden Institute for Computational Engineering and Sciences, UT Austin.
+> E-mail: krishnanunni@utexas.edu
+> Keywords: Neural architecture adaptation, A posteriori error estimation, Optimal control theory.
+
+Abstract 
+
+This work presents a novel approach for adapting neural network architecture along the depth based on a posteriori error estimation. By formulating neural network training as a continuous-time optimal control problem, we derive rigorous error estimates that quantify how approximation error distributes across network layers. This error decomposition enables a principled depth adaptation strategy: new layers are inserted at locations of maximum estimated error, allowing the network to efficiently capture complex, nonlinear variations in the underlying problem. Our framework introduces a novel network architecture that treats weights and biases as piecewise linear functions varying across layers, with the error estimator bounding the discrepancy between this discrete representation and the true continuous optimal control solution. The approach leverages dual weighted residual methodology from finite element analysis to derive computable upper bounds on the functional error. A key theoretical contribution is the derivation of explicit error bounds that decompose the total approximation error into interval-wise contributions, providing a rigorous basis for targeted architecture refinement. We demonstrate the effectiveness of our method on scientific datasets, including learning the observable-to-parameter map for the Navier-Stokes equation. Numerical results reveal that our approach consistently outperforms existing architecture adaptation methods in terms of generalization performance. 
+
+1 Introduction 
+
+Depth of a neural network plays a key role in the observed empirical success of deep learning. Stacking layers lets a network build successively more abstract features out of raw input data [1, 2]. Several of the architectures responsible for the largest jumps in benchmark performance over the past decade differ from their predecessors mainly in how many layers they contain [ 3, 4]. A key question is how many layers does a given task actually require, and how should the available parameters be distributed among them? In practice this question is still settled almost entirely by trial and error or a metaheuristic optimization-based search procedure [5, 6]. A network with too little depth and small width may be unable to represent the target function at all, whereas an unnecessarily deep network wastes compute and is more prone to overfitting. A more systematic, less wasteful approach to setting network depth therefore has clear practical value. Two broad families of methods have been proposed to automate this choice. The first treats architecture selection as a search problem. A population or sequence of candidate networks is proposed, evaluated using evolutionary computation [ 5, 6], reinforcement learning [ 7], or randomized search [ 8], and the best candidate is retained. These neural architecture search (NAS) methods can produce excellent architectures, but doing so typically requires training large numbers of candidates which makes the overall procedure costly, particularly when a single training run is itself expensive. The second family avoids searching a discrete space of architectures altogether. Instead, a single small network is trained and then grown, with new parameters added as training proceeds rather than fixed in advance [9, 10, 11, 12, 13]. Within this second family, the bulk of prior work targets towards growing the width of a network rather than its depth. Wynne-Jones [9] grew networks by splitting neurons identified through a principal component analysis. Firefly algorithm by Wu et al. [11] generates candidate neurons that either split existing neurons with noise or are completely new and selects those with the highest gradient norm. A related line of work [14] frames neuron splitting as a steepest descent step over 1arXiv:2607.07637v1 [cs.LG] 8 Jul 2026 IOP Publishing Journal (2025) Krishnanunni et al 
+
+probability measures in Wasserstein space. Evci et al. [10] instead select new neurons directly from gradient information, choosing those most likely to reduce the loss once activated. For growing an architecture along the depth, Bengio et al. [15] proposed a greedy layerwise unsupervised learning algorithm where the initial layers of a network are supposed to represent more abstract concepts that explain the input observation, whereas subsequent layers extract low-level features. This idea was later adapted to supervised learning by Hettinger et al.’s Forward Thinking algorithm [ 16 ]. Net2Net [17 ] takes a different route, inserting a layer initialized to be function preserving transformation such that the deeper network starts at exactly the loss value of its shallower predecessor before any retraining occurs. Sensli algorithm [ 18 ] builds on Net2Net by also choosing where the new layer goes, based on a sensitivity criterion, though its initialization of the inserted layer remains the same regardless of the training data or the chosen insertion site. Recently, we have proposed two depth growing strategies of our own. The first is a manifold regularized greedy layerwise training approach for adapting a neural architecture along its depth [13]. The second computes a closed-form topological derivative borrowed from topology optimization to decide both the location and initialization of an added new layer [12]. What is missing from most of this literature is a quantitative link between where a new layer is added and how the network’s approximation error decomposes across its layers. Such a measure becomes available once a residual network is viewed not as a stack of discrete layers but as a discretization of a continuous-time dynamical system. Under this viewpoint, training amounts to solving a discrete-time approximation of an optimal control problem in which the controls are the layer-wise weights and biases [19, 20]. Reframing network training this way opens the door to importing a substantial body of numerical analysis machinery built for exactly this kind of problem (architecture adaptation). In particular, the dual weighted residual (DWR) approach [21, 22] was developed in the finite element community to answer a structurally identical question: given a discretized solution to a PDE constrained optimization problem, where in the computational domain should the mesh be refined to most reduce the error in a quantity of interest [21, 22] ? It answers this question by writing the error as a sum of local, computable residuals attached to individual mesh elements. This paper develops a procedure for growing neural network architecture along the depth, motivated by the dual weighted residual (DWR) approach. Rather than treating the standard forward Euler discretization used in practice as the starting point, we represent a network’s weights and biases as piecewise linear functions of a continuous depth variable and discretize the underlying optimal control problem with a finite element method (section 3). Theorem 1 gives an exact expression for the gap between the loss achieved by such a discretized network and the loss that would be achieved if its parameters varied continuously with depth. Corollary 1 converts this expression into a fully computable upper bound that splits additively across the layer-to-layer intervals of the network (section 5), directly identifying which interval is contributing the most error. This interval-wise bound drives the adaptation procedure in Algorithm 1. A network of fixed depth is trained, the per-interval error is estimated, a new layer is inserted at the interval with the largest estimated error and initialized by interpolating its two neighbors, and the cycle repeats as long as a held-out validation loss keeps improving. In this way, the three design choices that any depth growing scheme must make, namely i) where to insert a layer, ii) when to stop inserting layers, and iii) how to initialize each new layer, are all resolved. Section 6 reports numerical results on a synthetic two-dimensional regression problem and on a severely ill-posed inverse problem for the Navier-Stokes equation, where the resulting networks generalize better than those produced by Net2Net [17], Forward Thinking [16], and random layer insertion. 
+
+2 Mathematical framework 
+
+In this work, all matrices are denoted by boldface capital letters, while all vectors are denoted by boldface lowercase letters. Consider a regression/classification task where one is provided with S
+
+training data points, input data dimension n0, and label dimension nT +1 . Let the inputs xs ∈ Rn0
+
+for s ∈ { 1, 2, ...S } be organized row-wise into a matrix X ∈ RS×n0 and the corresponding true labels be denoted as cs ∈ RnT +1 and stacked row-wise as C ∈ RS×nT +1 .
+
+2.1 Neural network training problem 
+
+Let us consider a fully connected neural network (FNN) employing residual connections [23]. We begin by definining the mesh t1 < t 2 < .... < t T , with step size hn−1 = tn − tn−1 and the corresponding intervals be denoted as In−1 = ( tn−1, t n), n = 2 , 3, . . . , T . Given the inputs xs and the corresponding true labels cs, we consider the following neural network training problem: 2IOP Publishing Journal (2025) Krishnanunni et al 
+
+Find 
+
+
+
+W h 
+
+> 0
+
+, . . . , W hT , bh 
+
+> 0
+
+, . . . bhT
+
+
+
+that solves the following optimal control problem: minimize 1
+
+S
+
+> S
+
+X
+
+> s=1
+
+J  xhs;T +1 
+
+
+
+subject to xhs;1 = σ1
+
+
+
+W h 
+
+> 0
+
+xhs;0 + bh
+
+> 0
+
+
+
+, xhs;0 = xs,
+
+xhs;t+1 = xhs;t + ht σ
+
+
+
+W ht xhs;t + bht
+
+
+
+, ∀t ∈ 1, . . . T − 1,
+
+xhs;T +1 = σT +1 
+
+
+
+W hT xhs;T + bhT
+
+
+
+(1) where s ∈ { 1, . . . S }, xs;t denotes the state at the t−th layer of the network corresponding to s-th training sample, J denotes the loss function, σ1(.), σ (.), σ T +1 (.) are activation functions acting component-wise on the inputs, W ht ∈ Rnt+1 ×nt , bht ∈ Rnt+1 denote the weights and biases, nt denotes the number of neurons in the t−th layer, T is the total number of hidden layers in the network. 
+
+2.2 Neural network training: Continuous problem 
+
+Consider (1) where ht → 0. In the continuum, therefore one has the following continuous optimal control problem [24] for training a neural network: Find (W 0, W T , b0, bT ), W (t) ∈ U w, b(t) ∈ U b that solves the following optimal control problem: minimize 1
+
+S
+
+> S
+
+X
+
+> s=1
+
+J (xs;T +1 )
+
+subject to xs(t1) = σ1 (W 0xs;0 + b0) , xs;0 = xs,
+
+˙xs(t) = σ (W (t)xs(t) + b(t)) , t1 ≤ t ≤ tT ,
+
+xs;T +1 = σT +1 (W T xs(tT ) + bT ) ,
+
+(2) where Uw, Ub are appropriate spaces that one assumes, and we also assumed that xs(t) is continuous and differentiable everywhere. 
+
+Goal Our goal in this work is to derive an expression (upper bound) for the following quantity using only the solution from (1): 
+
+1
+
+S
+
+> S
+
+X
+
+> s=1
+
+J  xhs;T +1 
+
+ − 1
+
+S
+
+> S
+
+X
+
+> s=1
+
+J (xs;T +1 ) . (3) If one can characterize how the error in (3) is distributed across the intervals In−1 in (1) , then a mesh refinement strategy can be devised. In particular, inserting a new hidden layer at the location of maximal error leads naturally to an architecture (depth) adaptation framework for neural networks. 
+
+Remark 1 To derive an estimate for (3) , we employ the dual weighted residual approach for a posteriori error estimation developed in [ 22 ]. The dual weighted residual framework is variational in nature and relies on discretizing (2) using a finite element method. However, the discrete optimal control problem (1) is obtained by applying a forward Euler scheme to discretize the ordinary differential equation (ODE) in (2) . Consequently, it is necessary to first reformulate and rederive (1) by discretizing the continuous optimal control problem (2) using a finite element method. 
+
+To this end, we restrict our discussion to the case where the input weights and biases, namely W 0
+
+and b0, are fixed and given. We also assume that the output weights and biases, W T and bT , are fixed and given. Under these assumptions, the optimal control problem (2) can be rewritten as follows: Find W (t) ∈ U w, b(t) ∈ U b that solves: minimize ˜J (x1(tT ), x2(tT ), . . . xS (tT )) = 1
+
+S
+
+> S
+
+X
+
+> s=1
+
+J (σT +1 (W T xs(tT ) + bT )) ,
+
+subject to ˙xs(t) = σ (W (t)xs(t) + b(t)) , t1 ≤ t ≤ tT ,
+
+(4) where the initial condition xs(t1) computed as xs(t1) = σ1(W 0xs;0 + b0).3IOP Publishing Journal (2025) Krishnanunni et al 
+
+3 True space and Finite element spaces 
+
+Before discretizing (4), we need to first define the true spaces Uw, Ub in (4). Let us consider the mesh t1 < t 2 < .... < t T , with step size hn−1 = tn − tn−1 and the corresponding intervals be denoted as In−1 = ( tn−1, t n), n = 2 , 3, . . . , T . The spaces Uw, Ub are defined as follows: 
+
+Uw =
+
+n
+
+W ∈ C0  [t1, t T ], Rn1×n1  : W |In ∈ C2  In, Rn1×n1  , n = 1 , . . . T − 1
+
+o
+
+,
+
+Ub =
+
+n
+
+b ∈ C0 ([ t1, t T ], Rn1 ) : b|In ∈ C2 (In, Rn1 ) n = 1 , . . . T − 1
+
+o
+
+,
+
+(5) where C2 (In, . ) denotes the space of twice continuously differentiable functions on interval In,
+
+C0 ([ t1, t T ], . ) denotes the space of continuous functions on interval [t1, t T ].Now let us assume the corresponding finite element spaces (Uw)h and (Ub)h as follows: 
+
+(Uw)h = {W h ∈ C0  [t1, t T ], Rn1×n1  : W h|In ∈ P 1  In, Rn1×n1  n = 1 , . . . T − 1},
+
+(Ub)h = {bh ∈ C0 ([ t1, t T ], Rn1 ) : bh|In ∈ P 1 (In, Rn1 ) n = 1 , . . . T − 1}, (6) where P 1 (In, . ) denotes the space of polynomials of degree at most one on the interval In. Note that one has (Uw)h ⊂ U w and (Ub)h ⊂ U b.In particular, with the assumed spaces in (6), on each interval In−1, n = 2 , . . . T we have the following representation for the weights and biases: 
+
+W h(t) = 
+
+
+
+1 − t − tn−1
+
+hn−1
+
+
+
+W h(tn−1) + 
+
+ t − tn−1
+
+hn−1
+
+
+
+W h(tn), tn−1 ≤ t ≤ tn
+
+bh(t) = 
+
+
+
+1 − t − tn−1
+
+hn−1
+
+
+
+bh(tn−1) + 
+
+ t − tn−1
+
+hn−1
+
+
+
+bh(tn), tn−1 ≤ t ≤ tn,
+
+(7) where W h(tn), bh(tn) are the weights and biases prescribed at time t = tn.
+
+3.1 Deriving the a-posteriori error estimate for neural network 
+
+With the spaces introduced in (5) and (6), we will now consider two optimal control problem for neural network training as follows: 
+
+True neural network training: Find W (t) ∈ U w, b(t) ∈ U b such that: minimize ˜J  {xs(tT )}Ss=1 
+
+ = 1
+
+S
+
+> S
+
+X
+
+> s=1
+
+J (σT +1 (W T xs(tT ) + bT )) ,
+
+subject to ˙xs(t) = σ (W (t)xs(t) + b(t)) , t1 ≤ t ≤ tT ,
+
+(8) where the notation ˜J  {xs(tT )}Ss=1 
+
+ means ˜J  {xs(tT )}Ss=1 
+
+ = ˜J (x1(tT ), x2(tT ), . . . xS (tT )) .
+
+Coarse neural network training: Find W h(t) ∈ (Uw)h, bh(t) ∈ (Ub)h such that: minimize ˜J  {xhs (tT )}Ss=1 
+
+ = 1
+
+S
+
+> S
+
+X
+
+> s=1
+
+J  σT +1 (W T xhs (tT ) + bT ) ,
+
+subject to ˙xhs (t) = σ(W h(t)xhs (t) + bh(t)) , t1 ≤ t ≤ tT ,
+
+(9) In (8) and (9) , we assume that xs(t), xhs (t) lies in the space of continuously differentiable functions on [t1, t T ]. Our objective now is to derive an expression (upper bound) for the following quantity using only the solution from (9): 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ ≤ 
+
+> T−1
+
+X
+
+> n=1
+
+En, (10) where En is the contribution of error in interval In. In particular, we are interested in understanding how the error in (10) decomposes across different intervals In.4IOP Publishing Journal (2025) Krishnanunni et al 0.0 0.2 0.4 0.6 0.8 1.0                  
+
+> Network Depth t(continuous time)
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> 0.8
+> Weight Value
+> t1t2t3t4t5
+> I1I2I3I4
+> (a) True vs. Approximated Weight Variation
+> True W(t) (nonlinear)
+> Piecewise linear Wh(t)
+> Discrete weights
+> I1I2I3I4
+> Interval
+> 0.00
+> 0.05
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> Error  n in Interval  In
+> Maximum error
+> (add layer here)
+> 1234
+> (b) Error Decomposition Across Intervals
+> Illustration of Weight Variation and Approximation Error
+
+Figure 1: Left to Right: The true space Uw, Ub and the finite element space (Uw)h , (Ub)h for weights and biases; Decomposition of error (10) across intervals and the adaptation procedure. 
+
+Remark 2 The goal of our approach is to characterize the error arising from the piecewise linear representation of weights and biases in the neural network. In Figure 1, we illustrate this concept: when solving the discrete optimal control problem (9) , we assume linear interpolation of the weights and biases between layers. However, if the true optimal weights and biases from problem (8) vary nonlinearly, the linear approximation of weights and biases in (9) introduces error as quantified in 
+
+(10) . Our adaptive strategy targets this discrepancy by refining intervals (i.e., adding new layers) where the error is highest, thereby allowing the network to capture more complex, nonlinear parameter variations in those regions. 
+
+Remark 3 In formulating problem (9) , we deliberately avoid discretizing the state variables xh(t)
+
+using a finite element space. Instead, for the theoretical derivation of the error estimate (10) , we assume the ODE in (9) is satisfied exactly. This assumption simplifies the analysis and leads to a cleaner error characterization focused solely on the parameter discretization/representation error. In practice, once the error estimator is derived, we discretize the ODE in (9) using a forward Euler scheme with a sufficiently fine mesh, controlled by the discretization parameter K. This practical implementation is detailed in section 5.2. The rationale for avoiding finite element discretization of the states and adjoints is discussed in remark 4. 
+
+4 Forming the Lagrangian and analysing the optimality conditions 
+
+To derive an error estimate of the form (10) , we first examine the first-order optimality conditions for problem (8). The Lagrangian for (8) can be written as: 
+
+L({xs(t)}Ss=1 , W (t), b(t), {zs(t)}Ss=1 ) = ˜J  {xs(tT )}Ss=1 
+
+
+
++
+
+> S
+
+X
+
+> s=1
+
+Z tT
+
+> t1
+
+( ˙ xs(t) − σ(W (t)xs(t) + b(t)) , zs(t)) dt, (11) where (., . ) denotes the Euclidean inner product in Rn1 , and zs(t) is the adjoint variable which we assume lies in the space of continuously differentiable functions on [t1, t T ]. We also assumed xs(t)
+
+lies in the space of continuously differentiable functions on [t1, t T ]. Similarly, for (9) we have: 
+
+L({xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 ) = ˜J  {xhs (tT )}Ss=1 
+
+
+
++
+
+> S
+
+X
+
+> s=1
+
+Z tT
+
+> t1
+
+
+
+˙xhs (t) − σ(W h(t)xhs (t) + bh(t)) , zhs (t)
+
+
+
+dt, 
+
+(12) where zhs (t) is the adjoint variable which we assume lies in the space of continuously differentiable functions on [t1, t T ]. We also assumed xhs (t) lies in the space of continuously differentiable functions on [t1, t T ]. The first-order optimality conditions for (12) and (11) are: 
+
+L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , eh
+
+= 0 , ∀eh, (13) 
+
+L′  {xs(t)}Ss=1 , W (t), b(t), {zs(t)}Ss=1 , e = 0 , ∀e, (14) 5IOP Publishing Journal (2025) Krishnanunni et al 
+
+where 
+
+L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , eh
+
+= ∇L 
+
+
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 
+
+⊤
+
+
+
+{eh 
+
+> xs
+
+}Ss=1 
+
+eh
+
+> W
+
+eh
+
+> b
+
+{eh 
+
+> zs
+
+}Ss=1 
+
+ ,
+
+(15) and eh =  {eh 
+
+> xs
+
+}Ss=1 , eh 
+
+> W
+
+, eh 
+
+> b
+
+, {eh 
+
+> zs
+
+}Ss=1 
+
+ , e =  {exs }Ss=1 , eW , eb, {ezs }Ss=1 
+
+ are variations in appropriate spaces, ∇L denotes the gradient of the Lagrangian with respect to all variables. We now analyze these first-order optimality conditions in the context of neural network training. 
+
+4.0.1 Forward propagation equations Taking the variation of the Lagrangian L in (11) with respect to the adjoint variable zs(t), we obtain the weak form: 
+
+Z tT
+
+> t1
+
+( ˙ xs(t) − σ(W (t)xs(t) + b(t)) , ezs (t)) dt = 0 , ∀ezs (t). (16) Since zs(t) lies in the space of continuously differentiable functions and ezs (t) is an arbitrary variation in this space, (16) must hold for all test functions ezs (t). By the fundamental lemma of calculus of variations, this implies that the integrand must vanish pointwise, yielding the strong form: 
+
+˙xs(t) = σ(W (t)xs(t) + b(t)) , t1 ≤ t ≤ tT , (17) where xs(t1) is computed as xs(t1) = σ1(W 0xs;0 + b0). Similarly, for (12) we have: 
+
+˙xhs (t) = σ(W h(t)xhs (t) + bh(t)) , t1 ≤ t ≤ tT , (18) where xhs (t1) is computed as xhs (t1) = σ1(W 0xs;0 + b0).
+
+Remark 4 (Using the strong form (18) instead of a weak form) We employ the strong form of the state and adjoint equations rather than a weak finite element formulation for the theoretical error analysis. We note that a weak, discontinuous-in-time Petrov–Galerkin formulation can recover the forward Euler method [25]. In this work, however, we choose instead to discretize the strong form of the state and adjoint equations directly with a forward Euler scheme, since this avoids introducing additional finite-element residual terms in the error estimate beyond the parameter discretization/representation error (see remark 5). To control the resulting state/adjoint discretization error, we employ a sufficiently fine sub-mesh, governed by the discretization parameter K (see section 5.2), ensuring that the numerical approximation of the states and adjoints remains accurate. 4.0.2 Adjoint equations We now consider the variation of the Lagrangian L in (11) with respect to the state variable x(t). To derive the ODE for z(t), we apply integration by parts: 
+
+Z tT
+
+> t1
+
+( ˙ xs(t) − σ(W (t)xs(t) + b(t)) , zs(t)) dt 
+
+=
+
+Z tT
+
+> t1
+
+( ˙ xs(t), zs(t)) dt −
+
+Z tT
+
+> t1
+
+(σ(W (t)xs(t) + b(t)) , zs(t)) dt 
+
+= ( xs(tT ), zs(tT )) − (xs(t1), zs(t1)) −
+
+Z tT
+
+> t1
+
+(xs(t), ˙zs(t)) dt 
+
+−
+
+Z tT
+
+> t1
+
+(σ(W (t)xs(t) + b(t)) , zs(t)) dt. 
+
+Taking the variation of L with respect to xs(t):
+
+
+
+∇s ˜J  {xs(tT )}Ss=1 
+
+ , exs (tT )
+
+
+
++ ( exs (tT ), zs(tT )) − (exs (t1), zs(t1)) 
+
+−
+
+Z tT
+
+> t1
+
+(exs (t), ˙zs(t)) dt −
+
+Z tT
+
+> t1
+
+ ∂σ (W (t)xs(t) + b(t)) 
+
+∂x(t) exs (t), zs(t)
+
+
+
+dt = 0 , ∀exs (t),
+
+6IOP Publishing Journal (2025) Krishnanunni et al 
+
+where ∇s ˜J  {xs(tT )}Ss=1 
+
+ denotes the gradient with respect to the variable xs(tT ). Since 
+
+exs (t1) = 0 (initial condition is prescribed as xs(t1) = σ1(W 0xs;0 + b0)), the above condition can be simplified as: 
+
+
+
+exs (tT ), zs(tT ) + ∇s ˜J  {xs(tT )}Ss=1 
+
+
+
+−
+
+Z tT
+
+> t1
+
+exs (t), ˙zs(t) + 
+
+ ∂σ (W (t)xs(t) + b(t)) 
+
+∂xs(t)
+
+T
+
+zs(t)
+
+!
+
+dt = 0 , ∀exs (t).
+
+(19) Since xs(t) lies in the space of continuously differentiable functions and exs (t) is an arbitrary variation in this space, (19) must hold for all test functions exs (t). This yields the following adjoint equations: 
+
+˙zs(t) + 
+
+ ∂σ (W (t)xs(t) + b(t)) 
+
+∂x(t)
+
+T
+
+zs(t) = 0 ,
+
+zs(tT ) = −∇ s ˜J  {xs(tT )}Ss=1 
+
+ .
+
+(20) Similarly, for (12) we have the following adjoint equations: 
+
+˙zhs (t) + 
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂xhs (t)
+
+#T
+
+zhs (t) = 0 ,
+
+zhs (tT ) = −∇ s ˜J  {xhs (tT )}Ss=1 
+
+ .
+
+(21) Note that (20), and (21) are solved backwards in time. 
+
+5 Error estimation 
+
+With this setting, we are now ready to derive an error estimate for (10). Theorem 1 provides an estimate for the error in (10). 
+
+Theorem 1 Let xs(t), W (t), b(t), zs(t) are solutions that satisfy the first order optimality condition (14) , and xhs (t), W hs (t), bhs (t), zhs (t) are solutions that satisfy the first order optimality condition (13) . In particular, xs(t), zs(t) satisfy (17) and (20) respectively; xhs (t), zhs (t) satisfy 
+
+(18) and (21) respectively. Then, 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ = 
+
+> T−1
+
+X
+
+> n=1
+
+ 12 ρnw + 12 ρnb
+
+
+
++ R, (22) 
+
+where 
+
+ρnw = −
+
+> S
+
+X
+
+> s=1
+
+Z
+
+> In
+
+W (t) − ˆW h
+
+(t),
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂W h(t)
+
+#T
+
+zhs (t)
+
+ dt ρnb = −
+
+> S
+
+X
+
+> s=1
+
+Z
+
+> In
+
+b(t) − ˆbh
+
+(t),
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂bh(t)
+
+#T
+
+zhs (t)
+
+ dt, 
+
+Here ˆbh
+
+(t) ∈ (Ub)h and ˆW h
+
+(t) ∈ (Uw)h are arbitrary, and R is the remainder (error) term that arises from using the trapezoidal rule to approximate an integral. 
+
+Proof: From the definitions of the Lagrangians in (11) and (12), and noting that both state equations (17) and (18) are satisfied exactly, we have: 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ =
+
+L({xs(t)}Ss=1 , W (t), b(t), {zs(t)}Ss=1 ) − L ({xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 ). (23) Applying the integral form of the Taylor expansion to express the Lagrangian at the true solution in terms of the discrete solution we have: 
+
+L({xs(t)}Ss=1 , W (t), b(t), {zs(t)}Ss=1 ) = L({xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 )+
+
+Z 10
+
+L′ 
+
+{xhs (t)}Ss=1 + s{exs }Ss=1 , W h(t) + seW , bh(t) + seb, {zhs (t)}Ss=1 + s{ezs }Ss=1 , e
+
+
+
+ds, 
+
+(24) 7IOP Publishing Journal (2025) Krishnanunni et al 
+
+where 
+
+L′ 
+
+{xhs (t)}Ss=1 + s{exs }Ss=1 , W h(t) + seW , bh(t) + seb, {zhs (t)}Ss=1 + s{ezs }Ss=1 , e
+
+
+
+=
+
+∇L 
+
+
+
+{xhs (t)}Ss=1 + s{exs }Ss=1 , W h(t) + seW , bh(t) + seb, {zhs (t)}Ss=1 + s{ezs }Ss=1 
+
+⊤
+
+
+
+{exs }Ss=1 
+
+eW
+
+eb
+
+{ezs }Ss=1 ,
+
+
+
+and e =  {exs }Ss=1 , eW , eb, {ezs }Ss=1 
+
+, with exs = xs − xhs , eW = W − W h, eb = b − bh,
+
+ezs = zs − zhs for each s ∈ { 1, . . . , S }. Adding and subtracting the average of the integrand values at 
+
+s = 0 and s = 1 in (24) we have: 
+
+L({xs(t)}Ss=1 , W (t), b(t), {zs(t)}Ss=1 ) = L({xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 )+
+
+Z 10
+
+L′ 
+
+{xhs (t)}Ss=1 + s{exs }Ss=1 , W h(t) + seW , bh(t) + seb, {zhs (t)}Ss=1 + s{ezs }Ss=1 , e
+
+
+
+ds 
+
++ 12 L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , e
+
+
+
+− 12 L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , e
+
+
+
+− 12 L′  {xs(t)}Ss=1 , W (t), b(t), {zs(t)}Ss=1 , e
+
+(25) where the last term is zero due to first order optimality condition (14). Note that last two terms in (25) approximate integral in (25) by the trapezoidal rule. Therefore we have: 
+
+L({xs(t)}Ss=1 , W (t), b(t), {zs(t)}Ss=1 ) = L({xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 )+ 12 L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , e
+
+
+
++ R, 
+
+(26) where R is the reminder which is the difference between the integral and the trapezoidal approximation. Using (26) in (23) we have: 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ = 12 L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , e
+
+
+
++ R
+
+= 12 L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , {xs − xhs }Ss=1 , W − W h, . . . 
+
+
+
++ R. 
+
+(27) Due to the first order optimality condition (13) for the discrete problem, we have 
+
+L′
+
+
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , eh
+
+
+
+= 0 for all variations eh in the finite element space. This Galerkin orthogonality property allows us to replace W h and bh with arbitrary functions 
+
+ˆW h
+
+∈ (Uw)h and ˆbh
+
+∈ (Ub)h. Therefore, we have: 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ =12 L′ 
+
+{xhs (t)}Ss=1 , W h(t), bh(t), {zhs (t)}Ss=1 , {xs − xhs }Ss=1 , W − ˆW h
+
+, b − ˆbh
+
+, {zs − zhs }Ss=1 
+
+
+
++ R. 
+
+(28) This replacement is valid because: 
+
+W − W h =
+
+
+
+W − ˆW h
+
++
+
+ ˆW h
+
+− W h
+
+,
+
+and the term involving 
+
+ ˆW h
+
+− W h
+
+vanishes due to Galerkin orthogonality (since 
+
+ˆW h
+
+− W h ∈ (Uw)h). The same argument applies to the bias terms. Now evaluating different terms in (28) based on the definition (12) we have: 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ = 
+
+> T−1
+
+X
+
+> n=1
+
+ 12 ρnw + 12 ρnb
+
+
+
++ R, 
+
+where 
+
+ρnw = −
+
+> S
+
+X
+
+> s=1
+
+Z
+
+> In
+
+W (t) − ˆW h
+
+(t),
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂W h(t)
+
+#T
+
+zhs (t)
+
+ dt 
+
+8IOP Publishing Journal (2025) Krishnanunni et al 
+
+ρnb = −
+
+> S
+
+X
+
+> s=1
+
+Z
+
+> In
+
+b(t) − ˆbh
+
+(t),
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂bh(t)
+
+#T
+
+zhs (t)
+
+ dt, 
+
+and the other terms vanish due to (18), and (21). This concludes the proof. 
+
+Remark 5 The choice of strong form formulation for the state equation (18) and adjoint equation 
+
+(21) eliminates two additional residual terms that would otherwise appear in the error estimate under a finite element discretization. This simplification is intentional: by avoiding finite element discretization at the theoretical level, we obtain a cleaner error characterization while retaining the flexibility to employ efficient explicit schemes (such as forward Euler) in the practical implementation. The discretization parameter K (see section 5.2) controls the accuracy of the numerical approximation of states and adjoints, and can be increased to reduce discretization error as needed. 
+
+Corollary 1 Consider the assumptions and the result (22) in Theorem 1. We have: 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ ≤ 
+
+> T−1
+
+X
+
+> n=1
+
+12
+
+ ωwn Rwn + ωbnRbn
+
+| {z }
+
+> En
+
++ |R| , (29) 
+
+where 
+
+ωwn = hn W (t) − ˆW h
+
+(t) In
+
+, ωbn = hn b(t) − ˆbh
+
+(t) In
+
+, (30) 
+
+Rwn =
+
+> S
+
+X
+
+> s=1
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂W h(t)
+
+#T
+
+zhs (t)
+
+> In
+
+, R bn =
+
+> S
+
+X
+
+> s=1
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂bh(t)
+
+#T
+
+zhs (t)
+
+> In
+
+(31) 
+
+Here the notation ∥f (t)∥In denotes the supremum norm on the interval In:
+
+∥f (t)∥In = sup 
+
+> t∈In
+
+∥f (t)∥2 . (32) 
+
+Proof: We derive the upper bound by applying the triangle inequality and Cauchy-Schwarz inequality to the error representation in Theorem 1. From the result (22) in Theorem 1, taking absolute values on both sides and applying the triangle inequality we have: 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ ≤ 12 
+
+> T−1
+
+X
+
+> n=1
+
+(|ρnw| + |ρnb |) + |R| . (33) Consider the term ρnw in Theorem 1: 
+
+ρnw = −
+
+> S
+
+X
+
+> s=1
+
+Z
+
+> In
+
+W (t) − ˆW h
+
+(t),
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂W h(t)
+
+#T
+
+zhs (t)
+
+ dt. (34) Taking the absolute value and applying the Cauchy-Schwarz inequality for the inner product, we have: 
+
+|ρnw| ≤ 
+
+> S
+
+X
+
+> s=1
+
+Z
+
+> In
+
+W (t) − ˆW h
+
+(t) 2
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂W h(t)
+
+#T
+
+zhs (t)
+
+> 2
+
+dt. (35) Since the integrand is non-negative, we can bound it by replacing the functions with their supremum values over the interval In:
+
+|ρnw| ≤ 
+
+> S
+
+X
+
+> s=1
+
+Z
+
+> In
+
+sup 
+
+> t∈In
+
+W (t) − ˆW h
+
+(t) 2
+
+· sup 
+
+> t∈In
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂W h(t)
+
+#T
+
+zhs (t)
+
+> 2
+
+dt 
+
+= hn W (t) − ˆW h
+
+(t) In
+
+·
+
+
+
+> S
+
+X
+
+> s=1
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂W h(t)
+
+#T
+
+zhs (t)
+
+> In
+
+ = ωwn Rwn
+
+(36) 9IOP Publishing Journal (2025) Krishnanunni et al 
+
+Following similar procedure for ρnb in Theorem 1, we have: 
+
+|ρnb | ≤ hn b(t) − ˆbh
+
+(t) In
+
+
+
+> S
+
+X
+
+> s=1
+
+"
+
+∂σ (W h(t)xhs (t) + bh(t)) 
+
+∂bh(t)
+
+#T
+
+zhs (t)
+
+> In
+
+ = ωbnRbn. (37) Substituting the bounds (36) and (37) into (33): 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ ≤ 12 
+
+> T−1
+
+X
+
+> n=1
+
+ ωwn Rwn + ωbnRbn
+
+ + |R| , (38) which is the desired result (29), thereby concluding the proof. 
+
+5.1 Approximating ωwn and ωbn using interpolation estimates 
+
+To compute the error bound in (29) , we require estimates of the terms ωwn and ωbn, which depend on the true (but unavailable) solutions W (t) and b(t). Since the true solution is unknown, we employ standard interpolation error estimates to approximate these quantities. By classical finite element interpolation theory, there exist ¯W h(t) ∈ (Uw)h and ¯bh(t) ∈ (Ub)h such that: 
+
+W (t) − ¯W h(t) In
+
+≤ h2
+
+> n
+
+8 ¨W (t) In
+
+, b(t) − ¯bh(t) In
+
+≤ h2
+
+> n
+
+8 ¨b(t) In
+
+, (39) where the second derivatives ¨W (t) and ¨b(t) are approximated in practice using centered difference quotients of the discrete weight and bias values [22]. These approximations provide practical estimates for ωwn and ωbn that can be computed from the available discrete solution. 
+
+5.2 Computing Rwn and Rbn in Corollary 1 
+
+Note that the terms Rwn and Rbn in Corollary 1 involve the state variables xh(t) and adjoint variables 
+
+zh(t), which theoretically satisfy the ODEs (18) and (21). While the theoretical error estimate in Corollary 1 assumes that the state equation (18) and adjoint equation (21) are satisfied exactly, in practice these ODEs must be discretized numerically. We employ a forward Euler scheme with a fine sub-discretization (controlled by a parameter K) to control the discretization error (see Figure 2). We assume that K is chosen such that the state/adjoint discretization error is very small and the error estimate in Corollary 1 solely focuses on the parameter representation error (see remark 3). 
+
+5.2.1 Discretization strategy Consider the mesh t1 < t 2 < · · · < t T defining the network layers, with step sizes hk = tk+1 − tk and intervals Ik = ( tk, t k+1 ) for k = 1 , . . . , T − 1. To accurately solve the ODEs, we introduce a sub-discretization parameter K ∈ N, which subdivides each interval Ik
+
+into K smaller steps of size hk/K . For each interval Ik = ( tk, t k+1 ), we subdivide it into K equal subintervals with step size ∆t = hk/K . Define the substep time points: 
+
+t(r) 
+
+> k
+
+= tk + rh k
+
+K , r = 0 , 1, . . . , K. (40) 
+
+5.2.2 Proposed neural network architecture Let us denote ˜W 0, ˜b0, ˜W h(t), ˜bh(t), ˜W T , ˜bT as the weights and biases of our proposed architecture, ˜xhs (t) denotes the state and ˜zhs (t) denotes the corresponding adjoint variable. Then, the forward propagation of our architecture can be written as follows: 
+
+Forward propagation for our proposed neural network architecture: 
+
+Input layer : ˜xhs (t1) = σ1( ˜W 0xs;0 + ˜b0), (41) The forward Euler scheme for the hidden layer ODE (18) with a fine discretization for the states is written as: 
+
+˜xhs
+
+
+
+t(r)
+
+> k
+
+
+
+= ˜ xhs
+
+
+
+t(r−1) 
+
+> k
+
+
+
++
+
+ hk
+
+K
+
+
+
+σ
+
+ ˜W h 
+
+t(r−1) 
+
+> k
+
+
+
+˜xhs
+
+
+
+t(r−1) 
+
+> k
+
+
+
++ ˜bh 
+
+t(r−1) 
+
+> k
+
+ 
+
+, (42) 10 IOP Publishing Journal (2025) Krishnanunni et al 
+
+for r = 1 , . . . , K and k = 1 , . . . , T − 1. The weights and biases ˜W h(t), ˜bh(t) are evaluated at each substep via linear interpolation: 
+
+˜W h(t) = 
+
+
+
+1 − t − tk
+
+hk
+
+
+
+˜W h(tk) + 
+
+ t − tk
+
+hk
+
+
+
+˜W h(tk+1 ), tk ≤ t ≤ tk+1 ,
+
+˜bh(t) = 
+
+
+
+1 − t − tk
+
+hk
+
+
+
+˜bh(tk) + 
+
+ t − tk
+
+hk
+
+
+
+˜bh(tk+1 ), tk ≤ t ≤ tk+1 .
+
+(43) 
+
+Output layer : ˜xhs (tT +1 ) = σT +1 ( ˜W T ˜xs(tT ) + ˜bT ), (44) Figure 2 illustrates the two-level discretization scheme: the coarse mesh {t1, . . . , t T } defines the network layers where parameters are stored, while the fine sub-mesh (controlled by parameter K) is used to accurately propagate states and adjoints between layers. 
+
+Adjoint propagation discretization. Similarly, the adjoint equation (21) is discretized backward in time using an analogous backward Euler scheme to estimate ˜zhs
+
+
+
+t(r)
+
+> k
+
+
+
+.Network depth t
+
+t1 t2 t3 t4 tT
+
+I1 I2 I3 
+
+> Parameter discretization (coarse)
+> Ksubdivisions for state/adjoint
+
+• Layer nodes (tk)
+
+• State points   
+
+> t
+> ˜W(t)
+> ˜Wh(t)
+> Parameters are piecewise linear between layers
+
+Figure 2: Two-level discretization scheme. Coarse mesh (bottom): Nodes {t1, . . . , t T } (blue circles) define intervals Ik. Parameters ˜W h(tk), ˜bh(tk) are stored at these nodes. Fine mesh (bottom): 
+
+Within each interval, K forward Euler substeps (red points) are used to propagate states and adjoints with step size ∆t = hk/K . Linear interpolation (top): The piecewise linear function ˜W h(t)
+
+(green) shows how parameters are interpolated between nodes for evaluation at substep points. 
+
+5.2.3 Computational error estimate In our work, we train a neural network of the form (42) to optimize for the weights ˜W h(t1), . . . ˜W h(tT ) and biases ˜bh(t1), . . . ˜bh(tT ). Let ˜xhs (t) and ˜zhs (t)
+
+denote the piecewise linear interpolants of the discrete solutions obtained from (42) . Inorder to obtain a practical estimate of the error bound in (29), we substitute the computed approximations in (29): 
+
+xhs (t) ≈ ˜xhs (t), zhs (t) ≈ ˜zhs (t), W h(t) = ˜W h(t), bh(t) = ˜bh(t).
+
+The upper bound in (39) is used to compute ωwn and ωbn (see section 5.1). Algorithm 1 shows our proposed architecture adaptation algorithm. The procedure starts with training a network Q1 with T hidden layers and nodes at {t1, . . . , t T }. The network Q1 has a forward propagation given by (41) , (42) , and (44) . Once the network Q1 is trained, we freeze (make it untrainable/fixed) the parameters of the input and output layer and focus our attention on adapting the hidden layers to further improve the performance. To that end, we compute the error 
+
+{E n}T −1 
+
+> n=1
+
+in (29) based on the procedure in section (5.2.3) . A new layer is inserted at the location of the maximum error. The weights and biases of the new layer are initialized as discussed in line 7 of Algorithm 1. The new network is trained again and the procedure is repeated until no more 11 IOP Publishing Journal (2025) Krishnanunni et al 
+
+Algorithm 1 A-posteriori error estimation and architecture adaptation 
+
+Input : Training data X, labels C, validation data X1, validation labels C1, number of neurons in each hidden layer n1, loss function ˜J , number of iterations Nn, hyperparameter K, hyperparameter 
+
+T , hyperparameters t1, t T , hyperparameters for optimizer (see Appendix B). 
+
+Initialize : Initialize network Q1 with T hidden layers and nodes at {t1, . . . , t T }, with hidden layer propagation given by (42).  
+
+> 1:
+
+Train network Q1 and freeze the parameters ( ˜W h 
+
+> 0
+
+, ˜bh 
+
+> 0
+
+, ˜W hT , ˜bhT ) of input layer (41) and output layer (44).  
+
+> 2:
+
+Store the best validation loss (ϵv )1 and the best performing network Q1. 
+
+> 3:
+
+set i = 1 , (ϵv )0 >> (ϵv )1 
+
+> 4:
+
+while i ≤ Nn and (ϵv )i ≤ (ϵv )i−1 do  
+
+> 5:
+
+Compute the a-posteriori error En in (29) for each n = 1 , . . . T − 1 based on the procedure in section (5.2.3).  
+
+> 6:
+
+Compute n∗ = arg max n{E n}, 
+
+> 7:
+
+Obtain the new network Qi+1 by adding a new layer/node at time t = tn∗ +tn∗+1  
+
+> 2
+
+with weight initialized as ˜W h(tn∗ )+ ˜W h(tn∗+1 )2 , and bias initialized as ˜bh(tn∗ )+ ˜bh(tn∗+1 )2 . 
+
+> 8:
+
+Set T = T + 1 and form new nodes {t1, . . . t T } after insering the new node.  
+
+> 9:
+
+Train network Qi+1 and store the best validation loss (ϵv )i+1 and the best network Qi+1 . 
+
+> 10:
+
+i = i + 1  
+
+> 11:
+
+end while  
+
+> 12:
+
+Defreeze parameters ( ˜W h 
+
+> 0
+
+, ˜bh 
+
+> 0
+
+, ˜W hT , ˜bhT ) of input layer and output layer and train the network 
+
+Qi−1 to achieve further improvement on validation loss. 
+
+Output : Network Qi−1
+
+improvement in validation loss is achieved or the maximum depth is attained (line 4). Once the algorithm terminates, as a postprocessing step, we defreeze (make it trainable) the parameters of the input and output layer and retrain the network to achieve further improvement on validation loss. 
+
+Remark 6 Note that a key assumption in Theorem 1 is that the weights and biases of the network must be at a local minimum (satisfying the first-order optimality condition). However, in Algorithm 1 we use a validation dataset to retain the best performing network (see lines 2 and 9 of Algorithm 1), which means that the network is not necessarily at a local minimum with respect to the training dataset at any given iteration of the algorithm. If the parameters are very far from a local minimum, this would impact the accuracy of the error estimated using Corollary 1. 
+
+6 Numerical demonstration 
+
+In this section, we numerically demonstrate the proposed approach on several datasets, with a primary focus on regression tasks. General experimental settings for all the problems and descriptions of methods adopted for comparison are detailed in Appendix A. Note that in our numerical results, “proposed approach" refers to Algorithm 1. Details of hyperparameter values used for different problems is provided in Appendix B. The loss function J in (8) is defined as the mean-squared error between the network output and the corresponding target data (label). 
+
+6.1 Proof of concept example 
+
+As a proof of concept of our proposed approach, we first consider the problem of learning a 2-dimensional function. The goal is to learn a nonlinear function 
+
+f (x, y ) = e−0.1(x2+y2) × sin x × cos y on the domain [−5, 5] × [−5, 5] as accurately as possible. The contours of this function is shown in subfigure (f) of Figure 5. We generated 1000 data points from a uniform distribution over the domain for training and considered 500 data points for the testing and validation respectively. In this case we have the input dimension n0 = 2 and output dimension for the network nT +1 = 1 . Our adaptation procedure starts by training a three hidden layer network with just 5 neurons in each hidden layer and we progressively increase the depth based on Algorithm 1. 
+
+6.1.1 Estimating discretization parameter K One of the key hyperparameters used in Algorithm 1 is the parameter K. Note that the parameter K is a discretization parameter chosen to ensure that the state and adjoint discretization error are small (see section 5.2.1). We conduct a mesh 12 IOP Publishing Journal (2025) Krishnanunni et al 
+
+convergence study to determine an appropriate value for K. To that end, let us first define an error indicator as follows: 
+
+Iϵ = 1
+
+S × T
+
+> T
+
+X
+
+> i=1
+> S
+
+X
+
+> s=1
+
+˜xhs (ti) − ˜xs(ti) 2
+
+∥˜xs(ti)∥2 ,
+
+where ˜xhs (ti) is the solution obtained after training network in section 5.2.2 for a given discretization parameter K. ˜xs(ti) denotes an estimate of the true solution obtained after training network in section 5.2.2 for a choice of large K (in this case K = 1000 ). We conduct the mesh convergence study for the initial network with T = 3 (three hidden layers). Figure 3 (left subfigure) shows how the average relative error Iϵ decreases as K increases. We choose 
+
+K = 4 such that the relative error Iϵ is 0.03 . This choice is sufficient to guarantee low error in the state/adjoint discretization for the initial coarse network, leading to accurate computational estimates (upper bounds) for the a-posteriori error in (29) (see Remark 5.2 for an explanation of why low error in state/adjoint discretization leads to accurate computational estimates for the a-posteriori error). Figure 3 (left subfigure) also shows that the computational time for training increases with K.Since larger K leads to slower forward propagation for our network (section 5.2.2), we refrain from using large K values for computational efficiency. 
+
+6.1.2 A-posteriori error estimates in Corollary 1 To see how well the estimated upper bound in (29) correlates with the true error in (29), we plot the true error 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ vs. the estimated upper bound in (29) and the results are shown in Figure 3 (right subfigure). For estimating the true error 
+
+˜J  {xs(tT )}Ss=1 
+
+ − ˜J  {xhs (tT )}Ss=1 
+
+ , we assume that ˜J  {xs(tT )}Ss=1 
+
+ ≈ 0, i.e there exists a true network in (8) that both fits the training data well and generalizes well, achieving near-zero validation loss. Figure 3 (right panel) shows that the estimated upper bound PT −1 
+
+> n=1
+
+En in (29) decreases with each adaptation iteration and closely approximates the true error. An important 2 5 10 20 40    
+
+> Discretization parameter K
+> 10 3
+> 10 2
+> 10 1
+> I (Average Relative Error)  Average Relative Error
+> Compute time
+> 0.5
+> 1
+> 2
+> 3
+> 4
+> 5
+> Compute time (min)
+
+(a) Estimating discretization parameter K2 4 6 8 10 12 14        
+
+> Adaptation Iteration No.
+> 10 −5
+> 10 −4
+> 10 −3
+> Error
+> True error |̃(x(tT)) −̃ (xh(tT))|
+> Estimated upper bound,
+> T− 1
+> ∑
+> n= 1
+> n
+
+(b) A-posteriori error estimates 
+
+Figure 3: Left to Right: Mesh convergence study for estimating discretization parameter K; A-posteriori error estimates at different iterations of the algorithm aspect of the derived upper bound in (29) is that it tells us how the total error PT −1 
+
+> n=1
+
+En distributes across each interval In (En is the error in interval In). We can then use it for adapting the network by adding a new layer (with new weights and biases) in the interval with maximum error as described in line 7 of Algorithm 1. Figure 4 shows the decomposition of error En computed using (29) at different iterations of the algorithm. We clearly see that upon adding a new hidden layer at the location of maximum error (indicated as a red block in Figure 4) and retraining the network, the error decreases at the location. The improvement in solution on adding new layers is shown in Figure 5 where one clearly sees that the algorithm progressively picks up complex features in the solution and generalizes better as one adds more layers. Figure 6 shows how the testing loss decreases with adaptation iteration. Further, Figure 7 shows the learnt contours of the function using different adaptation strategies. It is clear from Figure 7 that our proposed approach provides the most accurate predictions. Further, Table 1 shows the mean squared loss achieved on the test dataset by different approaches. 13 IOP Publishing Journal (2025) Krishnanunni et al 1 2
+
+Interval number 
+
+> 0.0000
+> 0.0002
+> 0.0004
+> 0.0006
+> 0.0008
+> 0.0010
+> Decomposed error
+
+3 hidden layer network   
+
+> 123
+
+Interval number 
+
+> 0.0000
+> 0.0002
+> 0.0004
+> 0.0006
+> 0.0008
+> 0.0010
+> Decomposed error
+
+4 hidden layer network    
+
+> 1234
+
+Interval number 
+
+> 0.0000
+> 0.0002
+> 0.0004
+> 0.0006
+> 0.0008
+> 0.0010
+> Decomposed error
+
+5 hidden layer network     
+
+> 12345
+
+Interval number   
+
+> 0
+> 2
+> 4
+> 6
+> 8
+> Decomposed error
+> 1e 5
+
+6 hidden layer network      
+
+> 123456
+
+Interval number   
+
+> 0
+> 2
+> 4
+> 6
+> 8
+> Decomposed error
+> 1e 5
+
+7 hidden layer network       
+
+> 1234567
+
+Interval number   
+
+> 0
+> 2
+> 4
+> 6
+> 8
+> Decomposed error
+> 1e 5
+
+8 hidden layer network        
+
+> 12345678
+
+Interval number   
+
+> 0
+> 1
+> 2
+> 3
+> 4
+> 5
+> Decomposed error
+> 1e 5
+
+9 hidden layer network         
+
+> 123456789
+
+Interval number   
+
+> 0
+> 1
+> 2
+> 3
+> 4
+> 5
+> Decomposed error
+> 1e 5
+
+10 hidden layer network          
+
+> 12345678910
+
+Interval number   
+
+> 0
+> 1
+> 2
+> 3
+> 4
+> 5
+> Decomposed error
+> 1e 5
+
+11 hidden layer network           
+
+> 12345678910 11
+
+Interval number   
+
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> Decomposed error
+> 1e 5
+
+12 hidden layer network            
+
+> 12345678910 11 12
+
+Interval number   
+
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> Decomposed error
+> 1e 5
+
+13 hidden layer network             
+
+> 12345678910 11 12 13
+
+Interval number   
+
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> Decomposed error
+> 1e 5
+
+14 hidden layer network              
+
+> 12345678910 11 12 13 14
+
+Interval number   
+
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Decomposed error
+> 1e 5
+
+15 hidden layer network               
+
+> 12345678910 11 12 13 14 15
+
+Interval number   
+
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Decomposed error
+> 1e 5
+
+16 hidden layer network                
+
+> 12345678910 11 12 13 14 15 16
+
+Interval number   
+
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Decomposed error
+> 1e 5
+
+17 hidden layer network 
+
+3 Hidden Layer Network 4 Hidden Layer Network 5 Hidden Layer Network 
+
+8 Hidden Layer Network 7 Hidden Layer Network 6 Hidden Layer Network 
+
+9 Hidden Layer Network 10 Hidden Layer Network 11 Hidden Layer Network 
+
+14 Hidden Layer Network 13 Hidden Layer Network 12 Hidden Layer Network 
+
+15 Hidden Layer Network 16 Hidden Layer Network 17 Hidden Layer Network 
+
+Figure 4: Decomposition of the a-posteriori error En in (29) at different iterations of the algorithm (x-axis denotes interval number and y-axis denotes the magnitude of error). Block in red denotes the interval of maximum error where a new layer is added for the next training phase. Table 1: Best test loss (Mean squared error) achieved by different adaptation strategies along with the computational time. 
+
+Test loss achieved Time taken (mean squared error) Proposed approach 9.0 × 10 −6 (final test loss) 46 min 
+
+2.5 × 10 −5 (intermediate loss) 14 min Random layer insertion 9.41 × 10 −5 5 min Net2DeeperNet [17] 7.66 × 10 −5 4.5 min Forward thinking [16] 7.1 × 10 −4 2.5 min Baseline network 3.82 × 10 −5 9 min 
+
+Table 1 shows that our approach produced the best test loss in comparison to other adaptation strategies. However, we note that the training time of our approach is signifiantly higher than other approaches. The reason for this is as follows: 1. Subdiscretization for the states and adjoints, i.e the use of parameter K leads to slower forward propagation for our network (section 5.2.2) in comparison to a conventional neural network architecture. 2. We note that other adaptation strategies terminated early (after adding a few layers) since no improvement in result (decrease in validation loss) was observed on adding a new layer (see line 4 in Algorithm 1). 3. Additionally, the optimizer used in Algorithm 1 automatically stops training if no improvement 14 IOP Publishing Journal (2025) Krishnanunni et al 
+
+(a) 3 hidden layers (b) 7 hidden layers (c) 10 hidden layers 
+
+(d) 12 hidden layers (e) 17 hidden layers (f) True solution 
+
+Figure 5: Evolution of contours of the solution upon adding new hidden layers in our proposed framework. Network with 17 hidden layers is able to learn the true function accurately. 2 4 6 8 10 12 14 
+
+> Adaptation Iteration No.
+> 10 −5
+> 10 −4
+> Loss
+> Training Loss
+> Testing Loss
+
+Figure 6: Training loss and testing loss achieved at different iterations of the algorithm. in validation loss is seen for a specified number of consecutive epochs (details are provided in Appendix B). We observed that our approach trains for a larger number of epochs, demonstrating better generalization capability compared to other approaches. This also leads to an increased training time. Table 1 also shows that one may terminate the algorithm much earlier and still achieve a reasonably low test loss of 2.5 × 10 −5 in a shorter computational time ( 14 min). 
+
+6.2 Learning the observable to parameter map for Navier Stokes equation. 
+
+In this section, we consider an inverse problem concerning the 2D Navier-Stokes equation for viscous and incompressible fluid [26, 27] in the vorticity-streamfunction formulation written as: 
+
+∂tω(x, t ) + v(x, t ) · ∇ ω(x, t ) = ν∆ω(x, t ), x ∈ [0 , 2π]2, t ∈ (0 , T t]
+
+∇ · v(x, t ) = 0 , x ∈ [0 , 2π]2, t ∈ (0 , T t]
+
+ω(x, 0) = ω0(x), x ∈ [0 , 2π]2,
+
+(45) 15 IOP Publishing Journal (2025) Krishnanunni et al   
+
+> (a) Proposed approach (b) Random layer insertion (c) True solution
+
+Figure 7: Predicted contours by different approaches. Our approach outperformed all the other adaptation strategies. where v(x, t ) is the velocity field, ω(x, t ) is the vorticity, ω0(x) is the initial vorticity, and ν = 10 −3
+
+is the viscosity coefficient. Periodic boundary conditions are imposed on all boundaries. The spatial domain is discretized with 64 × 64 uniform mesh, and we consider the time horizon t ∈ (0 , 0.5) . Our objective is to reconstruct the initial vorticity ω0(x) from the measurements of vorticity at 10 
+
+randomly selected observation points at the final time Tt = 0 .5 (see right subfigure in Figure 8). We therefore construct the input vector for the neural network as [ω(x1, 0.5) , . . . , ω (xn0 , 0.5)] , where 
+
+xi are fixed locations on the domain, and n0 = 10 . The output of the neural network are coefficients 
+
+c = ( c1, . . . , c nT +1 ) which can then be used to reconstruct the initial vorticity ω0(x) (see (46) below). We choose nT +1 = 50 .
+
+Note that the combination of information loss through temporal evolution and sparse spatial measurements makes this inverse problem severely ill-posed. 
+
+Figure 8: Left to right: Initial vorticity field; Vorticity field at time t = 0 .5 along with observation points (marked in red) used for inversion. 
+
+Data generation and numerical results For learning the inverse map, we draw samples of 
+
+ω(x, 0) based on the truncated Karhunen-Loève expansion as follows: 
+
+ω(x, 0) =  
+
+> nT+1
+
+X
+
+> i=1
+
+pλiϕi(x)ci, (46) where c = ( c1, . . . , c nT +1 ) are the KL coefficients drawn uniformly from [0 , 1] , and (λi, ϕ i) are eigenpairs obtained by the eigendecomposition of the squared exponential covariance kernel 
+
+K(x, x′) = exp 
+
+
+
+− ∥x − x′∥2
+
+2ℓ2
+
+
+
+, (47) with length scale ℓ = 0 .3, subject to periodic boundary conditions. For demonstration, we choose 
+
+nT +1 = 50 . For a given ω0(x), we solve the Navier-Stokes equation (45) using a pseudospectral 16 IOP Publishing Journal (2025) Krishnanunni et al 
+
+method in Fourier space with the RK45 (Runge-Kutta) time integration scheme to compute 
+
+ω(x, 0.5) on the grid, which is then used to generate the observation vector 
+
+[ω(x1, 0.5) , . . . , ω (xn0 , 0.5)] at the fixed observation locations. For a new observation data, the network outputs the vector c which can then be used to reconstruct ω0(x) using (46). In addition, 
+
+1% additive Gaussian noise is added to the observations y to represent the actual field condition. We consider experiments with training data set of size S = 700 . We consider an additional 100 
+
+data points for validation data set and 300 data points for testing data set. Other details on the hyperparameter settings are provided in Table B. Figure 9 shows the decomposition of error En computed using (29) for the first few iterations of Algorithm 1. We clearly see that upon adding a new hidden layer at the location of maximum error (indicated as a red block in Figure 4) and retraining the network, the error decreases at the location.   
+
+> (a) First iteration (b) Second iteration
+> (c) Third iteration (d) Fourth iteration
+
+Figure 9: Decomposition of the a-posteriori error En in (29) for the first few iterations of the algorithm. Block in red denotes the interval of maximum error where a new layer is added for the next training phase. To quantify the performance of our algorithm, we compute the average relative errors on the test dataset as follows: Err = 1
+
+M
+
+> M
+
+X
+
+> i=1
+
+ωpred i − ωtrue i
+
+> 2
+
+∥ωtrue i ∥2 , (48) where M denotes the number of test data samples, ωpred i denotes the neural network prediction for the ith test sample. Note that the network outputs the vector c which is then used to reconstruct 
+
+ω0(x) using (46) . Here, ωpred  
+
+> i
+
+denotes the vector of solution ω0(x) on a 64 × 64 grid. ωtrue i denotes the corresponding synthetic ground truth vorticity field. Figure 10 shows how the average relative error on the test dataset decreases at different iterations of the algorithm. As more layers are added, the network becomes more expressive, leading to improved generalization. In addition, Figure 11 shows the vorticity field (a random test sample) predicted by our proposed approach at termination 17 IOP Publishing Journal (2025) Krishnanunni et al 
+
+Figure 10: Average relative error (48) achieved on the test dataset at different iterations of the algorithm. of our Algorithm 1. Figure 11 shows that the predicted vorticity is close to the true vorticity field. Further, Table 2 shows the average relative error (48) achieved on the test dataset by different 
+
+Figure 11: Left to Right: Predicted vorticity field; and true vorticity field for a randomly chosen test sample. approaches. Table 2 shows that our approach produced the best average relative error in comparison to other adaptation strategies. However, note that the training time of our approach is higher than other approaches and the reason for this is discussed in item 1, item 2, and item 3. Further, in an Table 2: Best test loss (average relative error) achieved by different adaptation strategies along with the computational time.                     
+
+> Test loss achieved Time taken (average relative error) Proposed approach 0.161 (final test loss) 9min
+> 0.165 (intermediate loss) 5min Random layer insertion 0.170 1min Net2DeeperNet [17] 0.171 2min Forward thinking [16] 0.172 30 sec Baseline network 0.166 3min
+
+attempt to estimate the accuracy of each adaptation strategy (for a graphical representation of the error by each approach), we define the pointwise average relative error as: Err j = 1
+
+M
+
+> M
+
+X
+
+> i=1
+
+
+
+ωpred i,j − ωtrue i,j 
+
+2
+
+∥ωtrue i ∥2 /|ωi| , (49) 18 IOP Publishing Journal (2025) Krishnanunni et al 
+
+where subscript j denotes the jth component of ωi and |ωi| denotes the number of elements in the vector. Figure 12 shows the error Err j plotted for the main adaptation strategies. It is quite clear from Figure 12 that our approach outperformed all other adaptation strategies in terms of producing a lower error over the spatial domain.   
+
+> (a) Proposed approach (b) Random layer insertion
+> (c) Net2DeeperNet [17] (d) Forward thinking [16]
+> (e) Baseline network
+
+Figure 12: Pointwise average relative error (49) achieved by different approaches on the spatial domain. Our approach outperformed all the other adaptation strategies. 
+
+7 Conclusion 
+
+This work presents a rigorous mathematical framework for neural network architecture adaptation based on a posteriori error estimation. By formulating neural network training as a continuous-time optimal control problem and discretizing it using finite element method, we derived computable error bounds that characterize how approximation error distributes across network layers. This error decomposition provides a principled mechanism for depth adaptation: layers are inserted at locations of maximum error, enabling efficient refinement of the network architecture. The key contributions of our approach are threefold. First, we established theoretical error 19 IOP Publishing Journal (2025) Krishnanunni et al 
+
+estimates (Corollary 1) that rigorously bound the functional error arising from piecewise linear representation of network parameters. Second, we developed a practical computational framework (Algorithm 1) that implements these theoretical insights through a two-level discretization scheme, balancing theoretical rigor with computational efficiency. Third, we demonstrated through numerical experiments that our method outperforms existing architecture adaptation strategies in the small network width regime. One drawback of the approach is the increased computational cost compared to other approaches due to the subdiscretization parameter K involved (see section 5.2). However, this investment yields substantial improvements in final model quality as evident from our numerical results. For applications where model accuracy is paramount, the additional training time is justified by superior performance. Our future work includes extending the framework to other architectures such as convolutional and recurrent neural networks, and incorporating width adaptation alongside depth adaptation. 
+
+A General setting for numerical experiments 
+
+All codes were written in PyTorch. Throughout the study, we have employed the Adam optimizer for minimizing the loss function. Our proposed approach is compared with a number of different approaches as given below: Proposed approach : Architecture adaptation algorithm as described in Algorithm 1 .
+
+Random layer insertion : Architecture adaptation algorithm as described in Algorithm 1 with n∗ = arg min  
+
+> n
+
+{E n} in line 6 of Algorithm 1 .
+
+Net2DeeperNet : Increasing depth of network based on based on function preserving transformations. A layer is inserted at random position with a small Gaussian noise added to the parameters to break symmetry [17] .
+
+Baseline network (B) : Training a randomly initialized network with the same final layers T as obtained by our proposed approach .
+
+Forward Thinking (H) : Algorithm for layerwise adaptation proposed by Hettinger et al. [16] .
+
+We maintain the same activation functions and hyperparameters for all the adaptation strategies in order to make a fair comparison. For “proposed approach" and “random layer insertion", we use the architecture described in section 5.2.2. For all other approaches we use a conventional feed-forward neural network. Note that, for all methods, the reported numerical results correspond to the model that achieved the best validation loss. 
+
+Activation function employed 
+
+For all approaches, we use the tanh activation function in the input and hidden layers, with a 
+
+linear activation in the output layer. 
+
+Random search for best initialization of parameters 
+
+Note that each approach mentioned above requires random initialization of the network parameters to start the adaptation procedure. In this work, we consider 20 random initializations of the initial small network and retain the best performing network (lowest validation loss) for subsequent adaptation. 
+
+B Details of hyperparameter values for different problems 
+
+Details of hyperparameters used in Algorithm 1 is provided in Table 3. Table 3 additionally provides details on the hyperparameters used for the optimizer. The description of each problem is also provided below. In Table 3, bs denotes the batch size, ℓr denotes the learning rate, Ee denotes the Table 3: Details of hyperparameters for Algorithm 1                               
+
+> Problem n1KNnTt1tTEebsℓrτ
+> I5415 3011000 100 0.01 200 II 20 410 3011000 700 0.001 200
+
+20 IOP Publishing Journal (2025) Krishnanunni et al 
+
+maximum number of epochs for which the network is trained at each iteration of Algorithm 1. τ
+
+denotes the patience parameter, specifying the number of consecutive epochs without improvement in validation loss after which training is automatically terminated. For initializing the weights and biases, we choose a zero mean Gaussian noise with standard deviation σn = 0 .01 . The description of different problems in Table 3 are provided below: I : Proof of concept example in section 6.1 .
+
+II : Learning the observable to parameter map for Navier Stokes equation in section 6.2 .
+
+References 
+
+[1] Geoffrey E Hinton. Learning multiple layers of representation. Trends in cognitive sciences ,11(10):428–434, 2007. [2] Matthew D Zeiler and Rob Fergus. Visualizing and understanding convolutional networks. In 
+
+European conference on computer vision , pages 818–833. Springer, 2014. [3] Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale image recognition. arXiv preprint arXiv:1409.1556 , 2014. [4] Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich. Going deeper with convolutions. In Proceedings of the IEEE conference on computer vision and pattern recognition , pages 1–9, 2015. [5] Masanori Suganuma, Shinichi Shirakawa, and Tomoharu Nagao. A genetic programming approach to designing convolutional neural network architectures. In Proceedings of the genetic and evolutionary computation conference , pages 497–504, 2017. [6] Yuqiao Liu, Yanan Sun, Bing Xue, Mengjie Zhang, Gary G Yen, and Kay Chen Tan. A survey on evolutionary neural architecture search. IEEE transactions on neural networks and learning systems , 2021. [7] Barret Zoph and Quoc V Le. Neural architecture search with reinforcement learning. arXiv preprint arXiv:1611.01578 , 2016. [8] Liam Li and Ameet Talwalkar. Random search and reproducibility for neural architecture search. In Uncertainty in artificial intelligence , pages 367–377. PMLR, 2020. [9] Mike Wynne-Jones. Node splitting: A constructive algorithm for feed-forward neural networks. 
+
+Advances in neural information processing systems , 4, 1991. [10] Utku Evci, Bart van Merrienboer, Thomas Unterthiner, Max Vladymyrov, and Fabian Pedregosa. Gradmax: Growing neural networks using gradient information. arXiv preprint arXiv:2201.05125 , 2022. [11] Lemeng Wu, Bo Liu, Peter Stone, and Qiang Liu. Firefly neural architecture descent: a general approach for growing neural networks. Advances in neural information processing systems ,33:22373–22383, 2020. [12] CG Krishnanunni, Tan Bui-Thanh, and Clint Dawson. Topological derivative approach for deep neural network architecture adaptation. arXiv preprint arXiv:2502.06885 , 2025. [13] CG Krishnanunni and Tan Bui-Thanh. An adaptive and stability-promoting layerwise training approach for sparse deep neural network architecture. Computer Methods in Applied Mechanics and Engineering , 441:117938, 2025. [14] Lemeng Wu, Dilin Wang, and Qiang Liu. Splitting steepest descent for growing neural architectures. Advances in neural information processing systems , 32, 2019. [15] Yoshua Bengio, Pascal Lamblin, Dan Popovici, and Hugo Larochelle. Greedy layer-wise training of deep networks. Advances in neural information processing systems , 19, 2006. [16] Chris Hettinger, Tanner Christensen, Ben Ehlert, Jeffrey Humpherys, Tyler Jarvis, and Sean Wade. Forward thinking: Building and training neural networks one layer at a time. arXiv preprint arXiv:1706.02480 , 2017. 21 IOP Publishing Journal (2025) Krishnanunni et al 
+
+[17] Tianqi Chen, Ian Goodfellow, and Jonathon Shlens. Net2net: Accelerating learning via knowledge transfer. arXiv preprint arXiv:1511.05641 , 2015. [18] Leonie Kreis, Evelyn Herberg, Frederik Köhne, Anton Schiela, and Roland Herzog. Sensli: Sensitivity-based layer insertion for neural networks. arXiv preprint arXiv:2311.15995 , 2023. [19] Qianxiao Li and Shuji Hao. An optimal control approach to deep learning and applications to discrete-weight neural networks. In International Conference on Machine Learning , pages 2985–2994. PMLR, 2018. [20] Ricky TQ Chen, Yulia Rubanova, Jesse Bettencourt, and David K Duvenaud. Neural ordinary differential equations. Advances in neural information processing systems , 31, 2018. [21] Roland Becker and Rolf Rannacher. An optimal control approach to a posteriori error estimation in finite element methods. Acta numerica , 10:1–102, 2001. [22] Karin Kraft and Stig Larsson. The dual weighted residuals approach to optimal control of ordinary differential equations. BIT Numerical Mathematics , 50(3):587–607, 2010. [23] Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition ,pages 770–778, 2016. [24] Martin Benning, Elena Celledoni, Matthias J Ehrhardt, Brynjulf Owren, and Carola-Bibiane Schönlieb. Deep learning as optimal control problems: Models and numerical methods. arXiv preprint arXiv:1904.05657 , 2019. [25] Judit Munoz-Matute, Victor M Calo, David Pardo, Elisabete Alberdi, and Kristoffer G van der Zee. Explicit-in-time goal-oriented adaptivity. Computer Methods in Applied Mechanics and Engineering , 347:176–200, 2019. [26] Alexandre Joel Chorin. Numerical solution of the navier-stokes equations. Mathematics of computation , 22(104):745–762, 1968. [27] Claudio Canuto, M Youssuff Hussaini, Alfio Quarteroni, and Thomas A Zang. Spectral methods: fundamentals in single domains . Springer, 2006. 22

@@ -1,0 +1,313 @@
+{
+  "date": "20260708-20260806",
+  "date_label": "2026-07-08 ~ 2026-08-06",
+  "generated_at": "2026-08-06 11:50:38 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2607.13648v1",
+      "route": "20260708-20260806/2607.13648v1-meeting-uncertain-threats-with-feedback",
+      "title": "Meeting Uncertain Threats with Feedback",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 10.0,
+      "evidence": "基于MDP的防御资源分配，支持不确定性下的军事决策",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.23532v2",
+      "route": "20260708-20260806/2607.23532v2-mission-level-runtime-assurance-for-llm-assisted-isr-swarms-over-a-verification-aware-fabric",
+      "title": "Mission-Level Runtime Assurance for LLM-Assisted ISR Swarms over a Verification-Aware Fabric",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 10.0,
+      "evidence": "面向对抗环境下LLM辅助自主ISR蜂群的使命级运行时保证",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2608.00133v1",
+      "route": "20260708-20260806/2608.00133v1-deep-reinforcement-learning-from-first-principles-to-reasoning-models",
+      "title": "Deep Reinforcement Learning: From First Principles to Reasoning Models",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ai-papers"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "系统介绍深度强化学习，涵盖MDP、动态规划、时序差分学习与深度方法",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2608.01868v1",
+      "route": "20260708-20260806/2608.01868v1-no-one-wins-in-nuclear-war-a-social-simulation-of-military-decision-making",
+      "title": "No One Wins in Nuclear War: A Social Simulation of Military Decision-making",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "WOPR社会模拟环境研究组织级军事决策，以可验证规则引擎支持军事决策过程",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.15583v1",
+      "route": "20260708-20260806/2607.15583v1-distributed-continuous-aerial-surveillance-by-uas-swarms-under-formal-mission-specifications",
+      "title": "Distributed Continuous Aerial Surveillance by UAS Swarms Under Formal Mission Specifications",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于形式化任务规范的无人机蜂群自主持续监视，属于智能战争与自主系统范畴",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.16582v1",
+      "route": "20260708-20260806/2607.16582v1-autonomous-vr-based-risk-detection-for-situational-awareness-in-dangerous-settings",
+      "title": "Autonomous VR-Based Risk Detection for Situational Awareness in Dangerous Settings",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向危险环境的VLM辅助自主风险检测与态势感知，与军事态势感知高度相关",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.18604v1",
+      "route": "20260708-20260806/2607.18604v1-intelligent-multi-uav-navigation-in-itntns-a-hierarchical-llm-approach",
+      "title": "Intelligent Multi-UAV Navigation in ITNTNs: A Hierarchical LLM Approach",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "分层LLM驱动的多无人机导航智能体架构，融合DRL与战略推理，适用于自主作战与协同控制",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "biorxiv-10-64898-2026-07-13-738284-v1",
+      "route": "20260708-20260806/biorxiv-10-64898-2026-07-13-738284-v1-the-unique-value-of-zero-prediction-errors-in-reinforcement-learning",
+      "title": "The unique value of zero prediction errors in reinforcement learning",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ai-papers"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "强化学习核心原理：零预测误差作为一种独特的潜在信念状态",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.11193v2",
+      "route": "20260708-20260806/2607.11193v2-reptran-search-based-repair-of-transformer-models",
+      "title": "RepTran: Search-Based Repair of Transformer Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ai-papers"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "直接针对Transformer模型，关注基于注意力的架构与修复",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.11654v1",
+      "route": "20260708-20260806/2607.11654v1-a-model-for-mediating-multi-modal-human-intent-into-safe-maneuvers-for-uavs",
+      "title": "A Model for Mediating Multi-Modal Human Intent into Safe Maneuvers for UAVs",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向多模态操作员意图的无人机安全机动模型，与智能战争和自主系统高度相关。",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.12924v2",
+      "route": "20260708-20260806/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes",
+      "title": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ai-papers"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提出KGRL算法，利用知识与梯度引导参数化动作MDP的强化学习，提升样本效率",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.14806v1",
+      "route": "20260708-20260806/2607.14806v1-unified-evaluation-methodology-for-ai-native-integrated-sensing-and-communication",
+      "title": "Unified Evaluation Methodology for AI-Native Integrated Sensing and Communication",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提出AI原生通信感知一体化系统的统一架构与评估方法，其中学习型智能体自适应调整感知、通信与控制",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.18115v1",
+      "route": "20260708-20260806/2607.18115v1-compositional-semantic-communication-for-physical-ai-category-theory-meets-game-theory",
+      "title": "Compositional Semantic Communication for Physical AI: Category Theory Meets Game Theory",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "通过语义通信支持分布式感知智能体协同，可应用于军事态势感知",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.23438v1",
+      "route": "20260708-20260806/2607.23438v1-separating-capability-from-permission-a-governance-framework-for-agentic-ai-autonomy-levels",
+      "title": "Separating Capability from Permission: A Governance Framework for Agentic AI Autonomy Levels",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提出区分允许自治与能力自治的治理框架，涵盖授权作战权限等级，可直接应用于军事AI指挥控制",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.23870v1",
+      "route": "20260708-20260806/2607.23870v1-mulrobbench-a-decision-level-benchmark-for-safe-and-security-policy-compliant-multimodal-uav-agents",
+      "title": "MulRobBench: A Decision-Level Benchmark for Safe and Security-Policy-Compliant Multimodal UAV Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提出面向多模态无人机智能体的决策级基准MulRobBench，将物理证据、协议约束与行动风险耦合",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.07637v1",
+      "route": "20260708-20260806/2607.07637v1-an-optimal-control-approach-for-neural-network-architecture-adaptation-with-a-posteriori-error-estimation",
+      "title": "An optimal control approach for neural network architecture adaptation with a posteriori error estimation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ai-papers"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "提出基于误差估计的网络深度自适应方法，属于神经网络架构设计范畴",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.17951v1",
+      "route": "20260708-20260806/2607.17951v1-rt-shcua-real-time-self-hosted-computer-use-agent-for-uav-control",
+      "title": "RT-SHCUA: Real-Time Self-Hosted Computer-Use Agent for UAV Control",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向无人机控制的实时安全智能体架构，可应用于军事智能体系统",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.22361v1",
+      "route": "20260708-20260806/2607.22361v1-indexing-the-beginning-and-the-end",
+      "title": "Indexing: the Beginning and the End",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ai-papers"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "通过因果复杂度从理论上分析RNN、Transformer、线性注意力与状态空间模型的索引能力",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    },
+    {
+      "paper_id": "2607.22525v1",
+      "route": "20260708-20260806/2607.22525v1-explainable-reinforcement-learning-for-assisting-air-traffic-controllers",
+      "title": "Explainable Reinforcement Learning for assisting Air Traffic Controllers",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "military-ai"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向空中交通管制员的可解释强化学习可为高利害军事决策提供可迁移的人机智能决策支持方法",
+      "first_seen_at": "2026-08-06 11:50:38 UTC",
+      "updated_at": "2026-08-06 11:50:38 UTC"
+    }
+  ]
+}

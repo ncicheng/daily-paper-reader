@@ -1,0 +1,799 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-06T11:37:30.604451+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 8,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 20,
+    "quick_skim_target": 12,
+    "quick_selected": 12
+  },
+  "deep_dive": [
+    {
+      "id": "2607.13648v1",
+      "source": "arxiv",
+      "title": "Meeting Uncertain Threats with Feedback",
+      "abstract": "Air and missile defense, naval force protection, and critical-infrastructure security require rapid allocation of scarce effectors against multiple incoming threats when neutralization is uncertain and observed only after a firing round. We formulate this defensive-allocation problem as a Markov decision process in which a commander assigns a fixed amount of effector capacity each round to heterogeneous threats under three operational objectives: minimizing expected threat-clearance time, maximizing the probability of clearance by a deadline, and maximizing effective assignments before a deadline. Rather than expensive full dynamic optimization, we study simple time-oblivious policies suited to fast implementation. Fair allocation, which ignores threat difficulty and spreads fire evenly, is highly effective: it is optimal for all three objectives under homogeneous threats or low-capacity engagements. Moreover, when effector capacity scales at least linearly with the number of threats, its threat-clearance time trails that of the optimal policy by at most a constant number of rounds. We further develop threat-difficulty-aware greedy policies for each objective, including a constant-factor guarantee for effective assignment maximization. Numerically, greedy policies are near-optimal across heterogeneous instances, while fair allocation remains a principled choice when threat difficulties are unknown.",
+      "authors": [
+        "Louis L Chen",
+        "Ang Xu",
+        "Roberto Szechtman",
+        "Chiwei Yan",
+        "Vince Vanterpool"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-07-15T09:48:48+00:00",
+      "link": "https://arxiv.org/pdf/2607.13648v1",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "MDP-based defensive resource allocation for military decision-making under uncertainty",
+      "llm_evidence_cn": "基于MDP的防御资源分配，支持不确定性下的军事决策",
+      "llm_evidence": "基于MDP的防御资源分配，支持不确定性下的军事决策",
+      "canonical_evidence": "基于MDP的防御资源分配，支持不确定性下的军事决策",
+      "llm_tldr_en": "Defensive allocation against uncertain threats is formulated as an MDP. Simple time-oblivious policies such as fair allocation are studied for fast implementation. They effectively balance threat clearance and deadline objectives. Provides practical decision support for air and missile defense commanders.",
+      "llm_tldr_cn": "防空反导、海军防护和关键基础设施安全需要快速将稀缺火力分配给多个不确定威胁，且中和效果事后才能观测。本文将防御分配建模为马尔可夫决策过程，考虑最小化威胁清除时间、最大化按期清除概率和最大化有效分配三种作战目标。研究表明公平分配等简单无时间策略便于快速实现，且性能良好。该研究为指挥员在不确定威胁下进行资源分配提供了可靠的决策建模与策略选择依据。",
+      "llm_tldr": "防空反导、海军防护和关键基础设施安全需要快速将稀缺火力分配给多个不确定威胁，且中和效果事后才能观测。本文将防御分配建模为马尔可夫决策过程，考虑最小化威胁清除时间、最大化按期清除概率和最大化有效分配三种作战目标。研究表明公平分配等简单无时间策略便于快速实现，且性能良好。该研究为指挥员在不确定威胁下进行资源分配提供了可靠的决策建模与策略选择依据。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "intelligent support for military decision-making processes",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.23532v2",
+      "source": "arxiv",
+      "title": "Mission-Level Runtime Assurance for LLM-Assisted ISR Swarms over a Verification-Aware Fabric",
+      "abstract": "Swarms of LLM-assisted autonomous robots are increasingly proposed for cooperative intelligence, surveillance, and reconnaissance (ISR) in contested environments. A growing class of their assurance failures arises not within any single platform but across the swarm: individually-compliant actions compose into a mission-level violation: a prohibited objective split across platforms to evade per-platform lim- its, or a collective budget quietly exceeded. Per-platform guardrails miss these by construction, and contested communications let the violation hide behind lost or delayed evidence. We present a three-tier (platfor- m/squad/mission) compositional runtime-verification framework that de- composes a mission policy into per-agent and cross-agent aspects, aggre- gates per-platform verdicts over a verification-aware messaging fabric, and fuses them with an evidence-aware, two-axis (security x complete- ness) algebra whose provenance names the platforms that jointly trig- gered a violation. Because the fabric makes evidence loss and silence observable, unsupported negative verdicts are downgraded to an explicit unknown rather than reported as mission-wide all-clears. On a simulated ISR mission, an indirect prompt injection that causes real LLM planners to split a prohibited collection task across four platforms is invisible to every per-platform monitor yet detected compositionally with full prove- nance; under an injected fault campaign a best-effort central monitor emits silent false all-clears while the verification-aware fabric emits none",
+      "authors": [
+        "Nikolaos Kekatos",
+        "Panagiotis Katsaros",
+        "Alexios Lekidis",
+        "Theodoros Nestoridis",
+        "Tom Nianios"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.LO",
+        "cs.RO"
+      ],
+      "published": "2026-07-26T08:02:20+00:00",
+      "link": "https://arxiv.org/pdf/2607.23532v2",
+      "tags": [
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Mission-level runtime assurance for LLM-assisted autonomous ISR swarm in contested environments",
+      "llm_evidence_cn": "面向对抗环境下LLM辅助自主ISR蜂群的使命级运行时保证",
+      "llm_evidence": "面向对抗环境下LLM辅助自主ISR蜂群的使命级运行时保证",
+      "canonical_evidence": "面向对抗环境下LLM辅助自主ISR蜂群的使命级运行时保证",
+      "llm_tldr_en": "LLM-assisted ISR swarms need mission-level assurance beyond per-platform guardrails. A three-tier compositional runtime verification framework decomposes mission policy into per-agent rules and monitors swarm violations. It detects collective violations hidden by contested communications. Supports trustworthy deployment of military ISR swarms.",
+      "llm_tldr_cn": "LLM辅助的自主机器人蜂群越来越多地用于对抗环境下的联合情报、监视与侦察（ISR），但单个平台合规的决策组合起来可能违反使命级约束，而且通信中断会掩盖违规证据。本文提出平台/分队/使命三层组合式运行时验证框架，将使命策略分解到每架智能体，并在各层监测违规行为。该框架能够捕捉跨平台的责任分散与集体预算超支等问题，为军事ISR蜂群的可靠部署提供了运行时保证方法。",
+      "llm_tldr": "LLM辅助的自主机器人蜂群越来越多地用于对抗环境下的联合情报、监视与侦察（ISR），但单个平台合规的决策组合起来可能违反使命级约束，而且通信中断会掩盖违规证据。本文提出平台/分队/使命三层组合式运行时验证框架，将使命策略分解到每架智能体，并在各层监测违规行为。该框架能够捕捉跨平台的责任分散与集体预算超支等问题，为军事ISR蜂群的可靠部署提供了运行时保证方法。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "military intelligent agent applications and architectures",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.00133v1",
+      "source": "arxiv",
+      "title": "Deep Reinforcement Learning: From First Principles to Reasoning Models",
+      "abstract": "Deep reinforcement learning has evolved from classical dynamic programming, temporal-difference learning, and tabular control into a broad framework for sequential decision-making under uncertainty. This book provides a structured introduction to that evolution, emphasizing not only how reinforcement learning algorithms work, but also why they were developed, which problems they address, where they fail, and how they connect to real-world systems. It combines textbook foundations, research-oriented discussion, and a systems perspective. Early chapters introduce reinforcement learning, Markov decision processes, dynamic programming, Monte Carlo methods, temporal-difference learning, and the transition from tabular to deep approaches. The middle chapters cover major algorithmic families, including DQN, advanced value-based methods, policy gradients, actor-critic methods, PPO, SAC, model-based reinforcement learning, MuZero, offline reinforcement learning, and sequence-modeling approaches. Later chapters extend the discussion to multi-agent and hierarchical learning, safe reinforcement learning, reinforcement learning from human feedback, reasoning-oriented AI systems, communication networks, UAV applications, implementation pipelines, experimental methodology, failure analysis, and future research directions. Throughout the book, examples from UAV-assisted networks, SD-WAN traffic engineering, safe control, and reasoning-based AI connect mathematical concepts to practical challenges such as partial observability, competing objectives, safety constraints, deployment drift, and uncertain evaluation. The book is intended for advanced students, researchers, and engineers with basic knowledge of probability, linear algebra, calculus, and programming.",
+      "authors": [
+        "Ghoshana Bista"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-31T13:57:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.00133v1",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:ai-papers",
+        "query:military-AI"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Structured introduction to deep reinforcement learning, covering MDPs, dynamic programming, temporal-difference learning, and deep approaches",
+      "llm_evidence_cn": "系统介绍深度强化学习，涵盖MDP、动态规划、时序差分学习与深度方法",
+      "llm_evidence": "系统介绍深度强化学习，涵盖MDP、动态规划、时序差分学习与深度方法",
+      "canonical_evidence": "系统介绍深度强化学习，涵盖MDP、动态规划、时序差分学习与深度方法",
+      "llm_tldr_en": "A structured introduction to deep RL, tracing the evolution from dynamic programming and temporal-difference learning to deep approaches and reasoning models. It explains how algorithms work, why they were developed, and where they fail, with a systems perspective.",
+      "llm_tldr_cn": "本书系统介绍深度强化学习的演进脉络，从经典动态规划、时序差分学习和表格型控制方法，发展到深度强化学习与推理模型。它不仅讲解算法原理，还阐述算法的设计动机、适用问题、失效场景及与现实系统的联系。内容兼具教科书基础、研究讨论与系统视角，为初学者理解和掌握强化学习核心方法提供了权威路径，是学习该领域的重要参考资料。",
+      "llm_tldr": "本书系统介绍深度强化学习的演进脉络，从经典动态规划、时序差分学习和表格型控制方法，发展到深度强化学习与推理模型。它不仅讲解算法原理，还阐述算法的设计动机、适用问题、失效场景及与现实系统的联系。内容兼具教科书基础、研究讨论与系统视角，为初学者理解和掌握强化学习核心方法提供了权威路径，是学习该领域的重要参考资料。",
+      "llm_tags": [
+        "query:ai-papers"
+      ],
+      "matched_query_tag": "query:ai-papers",
+      "matched_query_text": "core reinforcement learning algorithms and principles",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.01868v1",
+      "source": "arxiv",
+      "title": "No One Wins in Nuclear War: A Social Simulation of Military Decision-making",
+      "abstract": "WOPR is a social-simulation environment for studying how organizations make high-stakes decisions, built on a deterministic, replay-validated rules engine and using wargames as the vehicle. We instantiate it first with the published card game Nuclear War, traced against its published rules. We start with military decision-making because of its safety implications and because it needs further study, but the design is not specific to it: the decision-point contract that exposes the engine to agents is reusable across verifiable rule systems. Existing social-simulation work emphasizes persona fidelity and synthetic opinion, but lacks a verifiable rules engine with replay-checkable mechanics and private-channel negotiation. WOPR supplies that engine, and its contract makes every strategic choice an explicit agent decision. The method is agnostic to social-simulation frameworks; we adopt Concordia as the default harness for driving the game. On the same engine, WOPR layers a four-rung press ladder from silence to private single-recipient channels with structured commitments, and instantiates each faction as a collective command-and-control system rather than a single agent. We make all code, example configurations, and replay data publicly available at https://github.com/eilab-gt/wopr.",
+      "authors": [
+        "Glenn Matlin",
+        "Isaac Song",
+        "Anthony Wen-Ming Zang",
+        "Mark Riedl"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY",
+        "cs.AI",
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-08-03T08:15:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.01868v1",
+      "tags": [
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "WOPR social simulation environment studies organizational military decision-making with a verifiable rules engine, directly supporting military decision-making processes",
+      "llm_evidence_cn": "WOPR社会模拟环境研究组织级军事决策，以可验证规则引擎支持军事决策过程",
+      "llm_evidence": "WOPR社会模拟环境研究组织级军事决策，以可验证规则引擎支持军事决策过程",
+      "canonical_evidence": "WOPR社会模拟环境研究组织级军事决策，以可验证规则引擎支持军事决策过程",
+      "llm_tldr_en": "WOPR is a deterministic, replay-validated social simulation engine for organizational high-stakes decisions. Instantiated with the Nuclear War card game, it exposes decision-point contracts to agents across verifiable rule systems, enabling credible military decision-making studies.",
+      "llm_tldr_cn": "社会模拟研究常聚焦人设与舆论生成，缺少可验证的规则引擎来支撑可靠结论。WOPR构建了确定性、可回放校验的仿真环境，以核战争卡牌游戏为载体，研究组织在高压下的军事决策过程。其决策点契约将引擎暴露给智能体，支持私有频道协商，并可在其他可验证规则系统中复用。该工作为军事决策研究提供了可检验、可重复的仿真基础设施。",
+      "llm_tldr": "社会模拟研究常聚焦人设与舆论生成，缺少可验证的规则引擎来支撑可靠结论。WOPR构建了确定性、可回放校验的仿真环境，以核战争卡牌游戏为载体，研究组织在高压下的军事决策过程。其决策点契约将引擎暴露给智能体，支持私有频道协商，并可在其他可验证规则系统中复用。该工作为军事决策研究提供了可检验、可重复的仿真基础设施。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "intelligent support for military decision-making processes",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-07-13-738284-v1",
+      "source": "biorxiv",
+      "title": "The unique value of zero prediction errors in reinforcement learning",
+      "abstract": "Learning is typically understood as a process driven by prediction errors, when outcomes differ from expectations. Yet it remains unclear whether outcomes that perfectly match expectations are psychologically and computationally meaningful. Here, we tested whether zero prediction errors shape affect, belief updating, and neural feedback processing in human reinforcement learning. Participants repeatedly predicted rewards in environments varying in uncertainty, with a subset of trial outcomes manipulated to exactly match their predictions. Zero prediction errors produced the highest momentary happiness, and computational modeling showed that behavior was best explained by a model in which zero prediction errors induce a distinct latent belief state that guides subsequent updating, particularly under higher uncertainty and in individuals with greater intolerance of uncertainty. Outcome-locked EEG analyses further showed that zero prediction errors elicited distinct P3-like responses, with residual neural activity predicting attenuated updating after zero prediction errors but enhanced updating after standard prediction errors. These findings suggest that perfect predictions are not neutral, but informative events that actively shape affect, behavior, and neural feedback processing.",
+      "authors": [
+        "Lloyd, B.",
+        "Kikumoto, A.",
+        "Wurm, F.",
+        "Vives, M.-L."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-07-14T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.13.738284v1.full.pdf",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:ai-papers",
+        "query:military-AI"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Core reinforcement learning principle: zero prediction errors as a distinct latent belief state",
+      "llm_evidence_cn": "强化学习核心原理：零预测误差作为一种独特的潜在信念状态",
+      "llm_evidence": "强化学习核心原理：零预测误差作为一种独特的潜在信念状态",
+      "canonical_evidence": "强化学习核心原理：零预测误差作为一种独特的潜在信念状态",
+      "llm_tldr_en": "This paper investigates whether zero prediction errors in reinforcement learning have unique value, showing they enhance momentary happiness and induce a distinct latent belief state, with computational models supporting their role in belief updating.",
+      "llm_tldr_cn": "该论文探讨强化学习中零预测误差的作用，即当结果与预期完全一致时是否仍对行为与心理有意义。通过让参与者反复预测奖励并操纵部分结果恰好匹配预期，发现零预测误差带来最高的瞬时幸福感，且计算模型表明需要引入由零预测误差诱发的独特潜在信念状态。该发现挑战了预测误差驱动学习的传统观点，对强化学习的算法与心理学理解具有重要意义。",
+      "llm_tldr": "该论文探讨强化学习中零预测误差的作用，即当结果与预期完全一致时是否仍对行为与心理有意义。通过让参与者反复预测奖励并操纵部分结果恰好匹配预期，发现零预测误差带来最高的瞬时幸福感，且计算模型表明需要引入由零预测误差诱发的独特潜在信念状态。该发现挑战了预测误差驱动学习的传统观点，对强化学习的算法与心理学理解具有重要意义。",
+      "llm_tags": [
+        "query:ai-papers"
+      ],
+      "matched_query_tag": "query:ai-papers",
+      "matched_query_text": "core reinforcement learning algorithms and principles",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.15583v1",
+      "source": "arxiv",
+      "title": "Distributed Continuous Aerial Surveillance by UAS Swarms Under Formal Mission Specifications",
+      "abstract": "Persistent aerial surveillance using multi-unmanned aerial systems (UASs) requires decentralized coordination, continuous team reconfiguration, and provable mission correctness despite limited onboard energy and communication constraints. This paper develops a distributed framework for continuous aerial surveillance under bounded Linear Temporal Logic (LTL) mission specifications. The proposed approach partitions the UAS team into stationary anchors and mobile workers operating under cyclic replacement modes, and constructs a deep neural network (DNN)-inspired communication topology that enables fully decentralized coordination through local interactions. A hierarchical bounded LTL specification formally captures mode-to-mode reference consistency, cyclic team rotation, finite-time reachability, trajectory tracking, and prescribed surveillance coverage. By proving the finite-time convergence of the worker-agent coordination dynamics, the paper guarantees the finite-time satisfaction of the mission specification. To maximize sensing effectiveness, an information-theoretic optimization framework synthesizes the reference configuration of newly deployed worker agents by minimizing the Kullback--Leibler divergence between the surveillance-node distribution and the induced coverage density. The resulting reference configuration uniquely determines a deterministic, mode-dependent communication topology, eliminating online communication-graph optimization while preserving the formal mission guarantees. Finally, a decentralized quadrotor controller realizes the distributed references using only local communication. Numerical simulations demonstrate cyclic team reconfiguration, decentralized communication-topology synthesis, finite-time formation convergence, and certified persistent surveillance coverage.",
+      "authors": [
+        "Hossein Rastgoftar"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "math.LO"
+      ],
+      "published": "2026-07-17T03:06:36+00:00",
+      "link": "https://arxiv.org/pdf/2607.15583v1",
+      "tags": [
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Decentralized UAS swarm surveillance under formal mission specifications for autonomous systems",
+      "llm_evidence_cn": "基于形式化任务规范的无人机蜂群自主持续监视，属于智能战争与自主系统范畴",
+      "llm_evidence": "基于形式化任务规范的无人机蜂群自主持续监视，属于智能战争与自主系统范畴",
+      "canonical_evidence": "基于形式化任务规范的无人机蜂群自主持续监视，属于智能战争与自主系统范畴",
+      "llm_tldr_en": "This paper presents a distributed framework for UAS swarms to perform continuous aerial surveillance under bounded LTL specifications, using a DNN-inspired topology and hierarchical specs to guarantee correctness.",
+      "llm_tldr_cn": "多无人机持续监视面临分布式协调和有限资源约束，难以保证任务正确性。本文提出一种分布式框架，将蜂群分为固定锚点与移动工作无人机，并通过循环替换模式和DNN启发的通信拓扑实现完全分布式协调。框架使用层次化有界LTL规范形式化描述模式切换，从而为持续监视提供可证明的正确性保证。",
+      "llm_tldr": "多无人机持续监视面临分布式协调和有限资源约束，难以保证任务正确性。本文提出一种分布式框架，将蜂群分为固定锚点与移动工作无人机，并通过循环替换模式和DNN启发的通信拓扑实现完全分布式协调。框架使用层次化有界LTL规范形式化描述模式切换，从而为持续监视提供可证明的正确性保证。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "intelligent warfare and autonomous systems",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.16582v1",
+      "source": "arxiv",
+      "title": "Autonomous VR-Based Risk Detection for Situational Awareness in Dangerous Settings",
+      "abstract": "In high-risk environments such as disaster response, situational awareness depends not only on detecting hazards but also on communicating them clearly to human operators. Vision Language Models (VLMs) have shown strong potential for scene understanding in safety-critical settings, yet their value as part of human-facing robotic systems remains underexplored. We present a VR-based Human Robot Interaction framework for studying how VLM-assisted robots can support situational awareness in simulated hazardous environments. In our system, a robot explores a virtual scene and queries a VLM to identify potential hazards and annotate user-facing points of interest. These annotations are presented to a human operator through an immersive VR interface. This framework enables controlled evaluation of both robotic hazard identification and the communication of safety-critical information to users. Results from our study indicate that the annotated VR interface was preferred over the unannotated baseline and that participants reported high clarity, usefulness, and comfort when interacting with the system. These findings suggest that combining VLM-based robotic perception with immersive visualization is a promising approach for supporting situational awareness in hazardous settings.",
+      "authors": [
+        "Mohammad Eskandari",
+        "Murali Krishna Varma Indukuri",
+        "Stephanie M. Lukin",
+        "Cynthia Matuszek"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-07-18T01:48:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.16582v1",
+      "tags": [
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "VLM-assisted autonomous risk detection for situational awareness in dangerous settings, closely related to military situation awareness",
+      "llm_evidence_cn": "面向危险环境的VLM辅助自主风险检测与态势感知，与军事态势感知高度相关",
+      "llm_evidence": "面向危险环境的VLM辅助自主风险检测与态势感知，与军事态势感知高度相关",
+      "canonical_evidence": "面向危险环境的VLM辅助自主风险检测与态势感知，与军事态势感知高度相关",
+      "llm_tldr_en": "Proposes a VR-based human-robot interaction framework where a VLM-equipped robot explores a hazardous scene, detects risks, and annotates points of interest for human operators to enhance situational awareness in dangerous settings.",
+      "llm_tldr_cn": "本文针对危险环境中人类操作员态势感知不足的问题，提出一个基于VR的人机交互框架：机器人探索虚拟场景并通过视觉语言模型识别潜在危险，将感兴趣的点以注释形式呈现给操作者。该方法利用沉浸式VR界面强化人机协作，验证了VLM辅助机器人在安全关键环境中支持态势感知的潜力，对军事和应急场景具有借鉴意义。",
+      "llm_tldr": "本文针对危险环境中人类操作员态势感知不足的问题，提出一个基于VR的人机交互框架：机器人探索虚拟场景并通过视觉语言模型识别潜在危险，将感兴趣的点以注释形式呈现给操作者。该方法利用沉浸式VR界面强化人机协作，验证了VLM辅助机器人在安全关键环境中支持态势感知的潜力，对军事和应急场景具有借鉴意义。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "artificial intelligence for military situation awareness",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.18604v1",
+      "source": "arxiv",
+      "title": "Intelligent Multi-UAV Navigation in ITNTNs: A Hierarchical LLM Approach",
+      "abstract": "The deployment of high-speed Uncrewed Aerial Vehicles (UAVs) in 3D aerial highways necessitates robust coordination of physical flight kinematics and multi-tier network handovers. While Deep Reinforcement Learning (DRL) offers rapid tactical control, it lacks the zero-shot strategic reasoning required to quickly adapt to dynamic Integrated Terrestrial and Non-Terrestrial Networks (ITNTNs). Conversely, Large Language Models (LLMs) excel at semantic reasoning but suffer from high inference latency, rendering them unsuitable for real-time aerodynamic control. To bridge this gap, we propose a novel Hierarchical LLM-driven control framework. A massive cloud-based LLM deployed on a High-Altitude Platform Station (HAPS) manages slow-timescale global load balancing, while lightweight edge-LLMs on individual UAVs translate local observations into tactical sub-goals. These sub-goals guide a fast-timescale physical DRL controller to execute collision-free, handover-aware trajectories. Simulation results demonstrate that our agentic architecture significantly reduces collision rates and improves aggregate system throughput compared to existing baselines.",
+      "authors": [
+        "Zijiang Yan",
+        "Hao Zhou",
+        "Wael Jaafar",
+        "Jianhua Pei",
+        "Ping Wang",
+        "Halim Yanikomeroglu",
+        "Hina Tabassum"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG",
+        "cs.NI",
+        "eess.SY"
+      ],
+      "published": "2026-07-21T00:34:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.18604v1",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Hierarchical LLM-driven control framework for intelligent multi-UAV navigation, combining DRL and strategic reasoning for autonomous operations",
+      "llm_evidence_cn": "分层LLM驱动的多无人机导航智能体架构，融合DRL与战略推理，适用于自主作战与协同控制",
+      "llm_evidence": "分层LLM驱动的多无人机导航智能体架构，融合DRL与战略推理，适用于自主作战与协同控制",
+      "canonical_evidence": "分层LLM驱动的多无人机导航智能体架构，融合DRL与战略推理，适用于自主作战与协同控制",
+      "llm_tldr_en": "This paper proposes a hierarchical LLM-driven control framework for multi-UAV navigation in ITNTNs, combining a cloud LLM on HAPS for slow-timescale global load balancing and DRL for rapid tactical control, addressing real-time adaptation and semantic reasoning.",
+      "llm_tldr_cn": "该论文针对高动态天地一体化网络中多无人机导航的实时决策与战略推理冲突，提出一种分层LLM控制框架：云端大模型部署于高空平台站，负责慢时间尺度的全局负载均衡与战略推理；无人机端采用深度强化学习处理快速战术控制。实验表明该框架能结合零样本推理能力与实时控制优势，适用于复杂异构网络环境下的自主导航与协同任务。",
+      "llm_tldr": "该论文针对高动态天地一体化网络中多无人机导航的实时决策与战略推理冲突，提出一种分层LLM控制框架：云端大模型部署于高空平台站，负责慢时间尺度的全局负载均衡与战略推理；无人机端采用深度强化学习处理快速战术控制。实验表明该框架能结合零样本推理能力与实时控制优势，适用于复杂异构网络环境下的自主导航与协同任务。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "military intelligent agent applications and architectures",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.11193v2",
+      "source": "arxiv",
+      "title": "RepTran: Search-Based Repair of Transformer Models",
+      "abstract": "To ensure the overall quality of AI-enabled software, not only traditional software components but also AI components need to be tested and repaired. Among AI components, Transformer models are increasingly integrated into software systems, which makes their misbehaviors critical. Although prior work in the software engineering community has proposed deep neural network (DNN) repair methods, most overlook Transformer-specific structures. We propose RepTran, a search-based repair method for Transformer models. It targets their feed-forward networks (FFNs), which play a central role in the architecture. RepTran identifies suspicious weights by combining two types of scores: a variance-based neuron score and an existing bidirectional score. It then iteratively optimizes these weights using differential evolution. Our evaluation includes 18 fault benchmarks constructed from CIFAR-100 and Tiny-ImageNet. We compare RepTran against three baselines: random weight selection, Arachne (a state-of-the-art DNN repair method), and ArachneW, which enables Arachne to control the number of selected weights. RepTran achieved an average repair rate of 74.7%, statistically outperforming random selection and Arachne across all benchmarks. Effect size analysis revealed that RepTran achieved higher repair rates than ArachneW regardless of the number of selected weights. These results suggest that RepTran is effective for enhancing the reliability of AI-enabled software.",
+      "authors": [
+        "Yuta Ishimoto",
+        "Paolo Arcaini",
+        "Fuyuki Ishikawa",
+        "Masanari Kondo",
+        "Naoyasu Ubayashi",
+        "Yasutaka Kamei"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.AI"
+      ],
+      "published": "2026-07-13T07:44:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.11193v2",
+      "tags": [
+        "keyword:ai-papers"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Directly targets Transformer models, related to attention-based architecture and repair",
+      "llm_evidence_cn": "直接针对Transformer模型，关注基于注意力的架构与修复",
+      "llm_evidence": "直接针对Transformer模型，关注基于注意力的架构与修复",
+      "canonical_evidence": "直接针对Transformer模型，关注基于注意力的架构与修复",
+      "llm_tldr_en": "Proposes RepTran, a search-based method that repairs Transformer feed-forward networks by identifying suspicious weights via variance-based and bidirectional scores, iteratively optimizing them.",
+      "llm_tldr_cn": "随着Transformer模型在软件系统中广泛集成，其错误行为修复需求迫切。现有DNN修复方法未考虑Transformer特有结构。本文提出RepTran，一种基于搜索的修复方法，聚焦其中的前馈网络，结合方差神经元分数与双向分数识别可疑权重，并迭代优化。该方法可有效修复Transformer模型的错误行为，提升AI软件质量。",
+      "llm_tldr": "随着Transformer模型在软件系统中广泛集成，其错误行为修复需求迫切。现有DNN修复方法未考虑Transformer特有结构。本文提出RepTran，一种基于搜索的修复方法，聚焦其中的前馈网络，结合方差神经元分数与双向分数识别可疑权重，并迭代优化。该方法可有效修复Transformer模型的错误行为，提升AI软件质量。",
+      "llm_tags": [
+        "query:ai-papers"
+      ],
+      "matched_query_tag": "query:ai-papers",
+      "matched_query_text": "transformer model for sequence processing and attention mechanism",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.07637v1",
+      "source": "arxiv",
+      "title": "An optimal control approach for neural network architecture adaptation with a posteriori error estimation",
+      "abstract": "This work presents a novel approach for adapting neural network architecture along the depth based on a posteriori error estimation. By formulating neural network training as a continuous-time optimal control problem, we derive rigorous error estimates that quantify how approximation error distributes across network layers. This error decomposition enables a principled depth adaptation strategy: new layers are inserted at locations of maximum estimated error, allowing the network to efficiently capture complex, nonlinear variations in the underlying problem. Our framework introduces a novel network architecture that treats weights and biases as piecewise linear functions varying across layers, with the error estimator bounding the discrepancy between this discrete representation and the true continuous optimal control solution. The approach leverages dual weighted residual methodology from finite element analysis to derive computable upper bounds on the functional error. A key theoretical contribution is the derivation of explicit error bounds that decompose the total approximation error into interval-wise contributions, providing a rigorous basis for targeted architecture refinement. We demonstrate the effectiveness of our method on scientific datasets, including learning the observable-to-parameter map for the Navier-Stokes equation. Numerical results reveal that our approach consistently outperforms existing architecture adaptation methods in terms of generalization performance.",
+      "authors": [
+        "C G Krishnanunni",
+        "Thomas Scott",
+        "Tan Bui-Thanh"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.NA",
+        "math.OC"
+      ],
+      "published": "2026-07-08T16:55:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.07637v1",
+      "tags": [
+        "keyword:ai-papers"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Presents a method for adapting neural network depth based on error estimation, aligned with neural architecture design",
+      "llm_evidence_cn": "提出基于误差估计的网络深度自适应方法，属于神经网络架构设计范畴",
+      "llm_evidence": "提出基于误差估计的网络深度自适应方法，属于神经网络架构设计范畴",
+      "canonical_evidence": "提出基于误差估计的网络深度自适应方法，属于神经网络架构设计范畴",
+      "llm_tldr_en": "Formulates NN training as optimal control with a posteriori error estimates, enabling principled depth adaptation by inserting layers at locations of maximum error.",
+      "llm_tldr_cn": "针对神经网络深度设计缺乏理论指导的问题，将网络训练建模为连续时间最优控制问题，并推导严格的后验误差估计。该方法根据误差在各层的分布，在误差最大的位置插入新层以自适应调整深度。其新的网络结构将权重和偏置视为逐层变化的线性函数，实验表明能高效捕捉复杂非线性变化。",
+      "llm_tldr": "针对神经网络深度设计缺乏理论指导的问题，将网络训练建模为连续时间最优控制问题，并推导严格的后验误差估计。该方法根据误差在各层的分布，在误差最大的位置插入新层以自适应调整深度。其新的网络结构将权重和偏置视为逐层变化的线性函数，实验表明能高效捕捉复杂非线性变化。",
+      "llm_tags": [
+        "query:ai-papers"
+      ],
+      "matched_query_tag": "query:ai-papers",
+      "matched_query_text": "key neural network architecture designs in artificial intelligence",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.11654v1",
+      "source": "arxiv",
+      "title": "A Model for Mediating Multi-Modal Human Intent into Safe Maneuvers for UAVs",
+      "abstract": "Direct human interaction with autonomous UAV systems can be enabled through modalities such as speech, gestures, and graphical interfaces. However, interpreting such inputs as directly executable commands introduces safety risks in dynamic environments. Operator requests may conflict with terrain constraints, inter-UAV separation requirements, or flight-envelope limitations. In this paper, we present a requirements-governed maneuver-response model that mediates multi-modal human intent into safe UAV maneuvers by treating operator inputs as bounded maneuver requests rather than direct commands. Requested maneuvers are mapped to constrained motion primitives and processed through a structured request-evaluate-execute pipeline. Each request is interpreted with associated confidence, validated against terrain, separation, workspace, and flight-envelope constraints, and either constrained, rejected, or executed under continuous runtime monitoring. We further formalize the approach as a requirements-based specification model in which maneuver primitives are associated with explicit preconditions, invariants, guard conditions, and postconditions governing admissibility, execution safety, and emergency handling. These requirements support runtime verification and future reactive synthesis approaches. We present an initial lab-based validation demonstrating that voice and GUI-based inputs can be reliably interpreted and safely executed as constrained maneuver requests.",
+      "authors": [
+        "Sofia Nelson",
+        "Dalal Alrajeh",
+        "Pedro Antonio Alarcon Granadeno",
+        "Jane Cleland-Huang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.SE"
+      ],
+      "published": "2026-07-13T15:04:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.11654v1",
+      "tags": [
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Autonomous UAV safety maneuver model for multi-modal operator intent; relevant to intelligent warfare and autonomous systems.",
+      "llm_evidence_cn": "面向多模态操作员意图的无人机安全机动模型，与智能战争和自主系统高度相关。",
+      "llm_evidence": "面向多模态操作员意图的无人机安全机动模型，与智能战争和自主系统高度相关。",
+      "canonical_evidence": "面向多模态操作员意图的无人机安全机动模型，与智能战争和自主系统高度相关。",
+      "llm_tldr_en": "The paper proposes a requirements-governed maneuver-response model for UAVs that treats operator inputs as bounded maneuver requests. It maps requests to constrained motion primitives and processes them via a request-evaluate-execute pipeline, checking conflicts with terrain, inter-UAV separation, and flight envelope, thus mediating multi-modal intent into safe maneuvers.",
+      "llm_tldr_cn": "该论文针对动态环境中无人机直接执行多模态操作指令存在的安全风险，提出了一种由需求约束的机动响应模型。模型将操作员的语音、手势和图形界面输入视为有界的机动请求，通过请求-评估-执行流水线将请求映射为受约束的运动原语，并与地形、无人机间距和飞行包线等约束条件进行校验。该方法在保证安全的前提下实现了人机协同控制，为智能战争中的自主无人机作战提供了重要技术支撑。",
+      "llm_tldr": "该论文针对动态环境中无人机直接执行多模态操作指令存在的安全风险，提出了一种由需求约束的机动响应模型。模型将操作员的语音、手势和图形界面输入视为有界的机动请求，通过请求-评估-执行流水线将请求映射为受约束的运动原语，并与地形、无人机间距和飞行包线等约束条件进行校验。该方法在保证安全的前提下实现了人机协同控制，为智能战争中的自主无人机作战提供了重要技术支撑。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "intelligent warfare and autonomous systems",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.17951v1",
+      "source": "arxiv",
+      "title": "RT-SHCUA: Real-Time Self-Hosted Computer-Use Agent for UAV Control",
+      "abstract": "Natural-language control offers a promising interface for unmanned aerial vehicles (UAVs), but directly applying self-hosted computer-use agents (SHCUAs) to UAV control introduces a structural mismatch. SHCUAs are designed for interactive host-side tool use, where delayed agent iterations are often acceptable. UAV control, however, is coupled with continuously changing physical states, strict timing constraints, safety risks, and security accountability. A stale, unauthorized, or tampered agent decision may therefore lead to unsafe or untraceable vehicle behavior.   This paper proposes a real-time and security-oriented restructuring of SHCUA-based UAV control. Instead of allowing an SHCUA to directly issue flight commands, we transform its outputs into contract-bound UAV skill invocations with explicit timing, state, authority, fallback, and evidence semantics. Based on this abstraction, we design an architecture that separates semantic reasoning from onboard execution and security/safety enforcement. Slow cloud or edge reasoning is used for mission understanding, while onboard components validate and dispatch only timely, authorized, and state-consistent skills. Security-critical enforcement points can be protected by TEE-style or microcontroller isolation mechanisms without moving the full language agent or high-frequency flight-control loop into trusted components. Prototype evaluation shows that RT-SHCUA maintains bounded task-level responsiveness while supporting degraded handling, trusted admission, and auditable evidence preservation for SHCUA-mediated UAV actions.",
+      "authors": [
+        "Di Lu",
+        "Bo Zhang",
+        "Xiyuan Li",
+        "Yongzhi Liao",
+        "Xuewen Dong",
+        "Yulong Shen",
+        "Zhiquan Liu",
+        "Jianfeng Ma"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-07-20T13:52:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.17951v1",
+      "tags": [
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "real-time secure AI agent architecture for UAV control applicable to military intelligent agent systems",
+      "llm_evidence_cn": "面向无人机控制的实时安全智能体架构，可应用于军事智能体系统",
+      "llm_evidence": "面向无人机控制的实时安全智能体架构，可应用于军事智能体系统",
+      "canonical_evidence": "面向无人机控制的实时安全智能体架构，可应用于军事智能体系统",
+      "llm_tldr_en": "Presents a real-time and security-oriented restructuring of self-hosted computer-use agents (SHCUAs) for UAV control, transforming agent outputs to meet strict timing, safety, and accountability constraints.",
+      "llm_tldr_cn": "本文针对自托管计算机使用智能体（SHCUA）直接用于无人机控制时面临的实时性、安全性和可追溯性难题，提出一种面向实时与安全的重构方法：不再让智能体直接下发飞行指令，而是将其输出转化为受限的安全控制动作。该方法建立了安全高效的无人机控制框架，缓解了智能体决策过时、越权或被篡改导致的风险，为无人机安全自主控制提供了有力支持。",
+      "llm_tldr": "本文针对自托管计算机使用智能体（SHCUA）直接用于无人机控制时面临的实时性、安全性和可追溯性难题，提出一种面向实时与安全的重构方法：不再让智能体直接下发飞行指令，而是将其输出转化为受限的安全控制动作。该方法建立了安全高效的无人机控制框架，缓解了智能体决策过时、越权或被篡改导致的风险，为无人机安全自主控制提供了有力支持。",
+      "llm_tags": [
+        "query:military-ai:composite"
+      ],
+      "matched_query_tag": "query:military-ai:composite",
+      "matched_query_text": "Papers central to 请帮我查找军事智能化、军事智能体相关的论文, especially work that connects or combines: military intelligent agent applications and architectures; artificial intelligence in military operations and strategy; intelligent warfare concepts and technologies; intelligent support for military decision-making processes; intelligent command and control systems in military; artificial intelligence for military situation awareness; research papers on military intelligent agents; artificial intelligence applications in military operations; intelligent warfare and autonomous systems; military command and control with AI.",
+      "matched_requirement_id": "req-composite-military-ai",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.12924v2",
+      "source": "arxiv",
+      "title": "Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes",
+      "abstract": "In this paper, we study Reinforcement Learning in Parametrized Action Markov Decision Processes (PAMDP), where each decision consists of a symbolic action and numerical parameters. In such settings Reinforcement Learning algorithms typically determine parameters with one-shot estimators, which makes their training sample inefficient. Though in most PAMDP environments explicit but incomplete knowledge (e.g., rules, safety constraints, or expert heuristics) is available, it is rarely directly used to increase the sample-efficiency of training Reinforcement Learning agents. We step into this gap and propose our novel Neuro-Symbolic Knowledge- and Gradient-Guided Reinforcement Learning (KGRL) algorithm. KGRL uses domain knowledge in a Datalog knowledge base to derive the set of applicable actions and feasible parameters for a given state. This allows it to prune non-applicable actions from the decision-space and constrain the parameter spaces of the remaining actions. We then use a gradient-based parameter refinement loop to estimate the optimal parameters during training and deployment of the agent. By recording activated rules along the trajectory, KGRL additionally provides local procedural explanations on the pruning of actions and constraining of parameters. Overall, KGRL guides the agent's exploration and deployment toward feasible and constraint-aware decisions, while increasing sample efficiency during training. KGRL outperforms state-of-the-art RL baselines for PAMDPs in both, sample efficiency and episodic return.",
+      "authors": [
+        "Jonas Ehrhardt",
+        "René Heesch",
+        "Oliver Niggemann"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-14T15:57:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.12924v2",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:ai-papers",
+        "query:military-AI"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Proposes KGRL, a knowledge- and gradient-guided RL algorithm for parametrized action MDPs to improve sample efficiency",
+      "llm_evidence_cn": "提出KGRL算法，利用知识与梯度引导参数化动作MDP的强化学习，提升样本效率",
+      "llm_evidence": "提出KGRL算法，利用知识与梯度引导参数化动作MDP的强化学习，提升样本效率",
+      "canonical_evidence": "提出KGRL算法，利用知识与梯度引导参数化动作MDP的强化学习，提升样本效率",
+      "llm_tldr_en": "Proposes KGRL, a neuro-symbolic reinforcement learning algorithm for parametrized action MDPs. It uses incomplete domain knowledge to guide parameter estimation, improving sample efficiency over one-shot estimators in PAMDP environments.",
+      "llm_tldr_cn": "针对参数化动作马尔可夫决策过程（PAMDP）中强化学习样本效率低的问题，本文提出了一种神经符号的知识与梯度引导强化学习算法（KGRL）。该算法利用显式但不完整的领域知识（如规则、安全约束或专家启发）引导动作参数估计，克服传统一次性估计器的缺点。实验表明，KGRL能有效提升训练样本效率，为存在先验知识的决策场景提供了高效的学习方法，可扩展应用于机器人控制和军事智能决策等领域。",
+      "llm_tldr": "针对参数化动作马尔可夫决策过程（PAMDP）中强化学习样本效率低的问题，本文提出了一种神经符号的知识与梯度引导强化学习算法（KGRL）。该算法利用显式但不完整的领域知识（如规则、安全约束或专家启发）引导动作参数估计，克服传统一次性估计器的缺点。实验表明，KGRL能有效提升训练样本效率，为存在先验知识的决策场景提供了高效的学习方法，可扩展应用于机器人控制和军事智能决策等领域。",
+      "llm_tags": [
+        "query:ai-papers"
+      ],
+      "matched_query_tag": "query:ai-papers",
+      "matched_query_text": "core reinforcement learning algorithms and principles",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.22361v1",
+      "source": "arxiv",
+      "title": "Indexing: the Beginning and the End",
+      "abstract": "We study information bottlenecks in modern deep-learning architectures -- RNNs, softmax transformers, linear-attention transformers and state-space models -- through the lens of the indexing primitive. In this primitive, the input consists of $n$ bits and one integer $i$ from $1$ to $n$ called the index, and the output equals the value of the $i$-th bit.   We introduce causal complexity for masked architectures. We show that architectures with low causal complexity cannot solve the indexing primitive in any constant number of layers when the index appears at the end of the input. In particular, this limitation applies to low-parameter RNNs, SSMs and masked linear-attention transformers. In contrast, small softmax transformers can solve it in one layer, while non-masked linear-attention transformers can solve it in 2, which separates them from their masked counterparts. In turn, when the index appears at the beginning, we show that small RNNs are capable of solving this task in 1 layer, while all the other architectures require 2.   All our impossibility results are unconditional and apply even to models that employ infinite-precision real arithmetic. Moreover, experiments for up to $n=64$ qualitatively align with our theory: configurations with low-parameter theoretical solutions learn the indexing task easily, while configurations that do not admit such theoretical solutions struggle to learn as the sequence length grows.",
+      "authors": [
+        "Alexander Kozachinskiy",
+        "Vicente Opazo",
+        "Felipe Urrutia"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-24T14:42:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.22361v1",
+      "tags": [
+        "keyword:ai-papers",
+        "query:ai-papers"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Theoretical analysis of indexing capabilities of RNN, transformer, linear-attention, and state-space architectures via causal complexity",
+      "llm_evidence_cn": "通过因果复杂度从理论上分析RNN、Transformer、线性注意力与状态空间模型的索引能力",
+      "llm_evidence": "通过因果复杂度从理论上分析RNN、Transformer、线性注意力与状态空间模型的索引能力",
+      "canonical_evidence": "通过因果复杂度从理论上分析RNN、Transformer、线性注意力与状态空间模型的索引能力",
+      "llm_tldr_en": "Introduces causal complexity for masked architectures, showing low causal complexity models (RNNs, SSMs, masked linear-attention transformers) cannot solve indexing in constant layers when index is at the end, while small softmax transformers can do it in one layer.",
+      "llm_tldr_cn": "现代深度学习架构之间的表达能力差异一直缺乏统一的理论视角。本文引入索引原语与因果复杂度概念，考察RNN、softmax Transformer、线性注意力Transformer和状态空间模型在索引任务上的表现。结果表明，低参数RNN、状态空间模型和掩码线性注意力Transformer在索引出现在输入末尾时无法在常数层内解决该问题，而小型softmax Transformer仅需一层即可解决。该研究从理论上揭示了不同架构在信息访问与整合上的本质差异，对理解Transformer的优势与设计新型序列模型具有指导意义。",
+      "llm_tldr": "现代深度学习架构之间的表达能力差异一直缺乏统一的理论视角。本文引入索引原语与因果复杂度概念，考察RNN、softmax Transformer、线性注意力Transformer和状态空间模型在索引任务上的表现。结果表明，低参数RNN、状态空间模型和掩码线性注意力Transformer在索引出现在输入末尾时无法在常数层内解决该问题，而小型softmax Transformer仅需一层即可解决。该研究从理论上揭示了不同架构在信息访问与整合上的本质差异，对理解Transformer的优势与设计新型序列模型具有指导意义。",
+      "llm_tags": [
+        "query:ai-papers"
+      ],
+      "matched_query_tag": "query:ai-papers",
+      "matched_query_text": "key neural network architecture designs in artificial intelligence",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.14806v1",
+      "source": "arxiv",
+      "title": "Unified Evaluation Methodology for AI-Native Integrated Sensing and Communication",
+      "abstract": "Integrated Sensing and Communication (ISAC) couples radio sensing, data transmission, and control actions within a single closed-loop system. When Artificial Intelligence (AI)-driven policies adapt sensing and communication online across a variety of sensing tasks and objectives, end-to-end performance is shaped not only by waveform and channel conditions but also by inference latency, uncertainty, environmental dynamics, and hardware non-idealities, leading to fundamental trade-offs between sensing accuracy, communication reliability, and resource overhead. This manuscript presents a unified system architecture and evaluation methodology for AI-native ISAC, defined as ISAC in which learning-based agents adapt sensing, communication, and actuation policies online under uncertainty. We formalize the design space of closed-loop ISAC, propose a three-stage validation pipeline from bounds and feasibility analysis, through high-fidelity digital-twin simulation, to preliminary over-the-air validation, and provide a minimal reporting checklist that links technical Key Performance Indicators (KPIs) (e.g., data rate, SINR, target detection, parameter estimation, track quality, localization error, outage, latency, overhead, and energy per decision) to application-level Key Value Indicators (KVIs) (e.g., availability and mission effectiveness). Two representative instantiations, specifically Unmanned Aerial Vehicle (UAV)-based outdoor and Reconfigurable Intelligent Surface (RIS)-enabled indoor coverage extensions, are used to illustrate how to structure reproducible baselines and comparable evidence across heterogeneous deployments, helping bridge the gap between theoretical ISAC gains and deployment-ready performance claims.",
+      "authors": [
+        "Filip Lemic",
+        "Andra Blaga",
+        "Francesco Devoti",
+        "Guillermo Encinas Lago",
+        "Jan Adler",
+        "Amitha Mayya",
+        "Padmanava Sen",
+        "Giorgos Stratidakis",
+        "Sotiris Droulias",
+        "Angeliki Alexiou",
+        "Alexander Artemenko",
+        "Aya Mostafa Ahmed",
+        "Visa Koivunen",
+        "Robin Rajamäki",
+        "Simon Schütze",
+        "Robert Elschner",
+        "Amélie Hennequart",
+        "Ahmad Shoukair",
+        "Youssef Nasser",
+        "Nahuel Soprano-Loto",
+        "François Baccelli",
+        "Visa Tapio",
+        "Paul Almasan",
+        "Andra Lutu",
+        "Vincenzo Sciancalepore",
+        "Carmen Delgado",
+        "Xavier Costa-Pérez"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-07-16T10:23:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.14806v1",
+      "tags": [
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Presents unified architecture and evaluation methodology for AI-native ISAC where learning-based agents adapt sensing, communication, and control",
+      "llm_evidence_cn": "提出AI原生通信感知一体化系统的统一架构与评估方法，其中学习型智能体自适应调整感知、通信与控制",
+      "llm_evidence": "提出AI原生通信感知一体化系统的统一架构与评估方法，其中学习型智能体自适应调整感知、通信与控制",
+      "canonical_evidence": "提出AI原生通信感知一体化系统的统一架构与评估方法，其中学习型智能体自适应调整感知、通信与控制",
+      "llm_tldr_en": "Presents a unified architecture and evaluation methodology for AI-native ISAC where learning-based agents adapt sensing, communication, and control. Addresses end-to-end trade-offs from latency, uncertainty, and dynamics.",
+      "llm_tldr_cn": "针对AI原生通信感知一体化（ISAC）系统缺乏统一评估体系的问题，本文提出了一套统一的系统架构与评估方法。该方法考虑学习型智能体对感知、通信与控制的自适应调整，以及推理延迟、不确定性、环境动态和硬件非理想性对端到端性能的影响。它系统性地刻画了感知精度、通信可靠性与资源开销之间的基本权衡，为闭环ISAC系统的设计、评估与比较提供了可复用的方法框架。这对于军事作战中的感知与通信技术评估具有重要的参考价值。",
+      "llm_tldr": "针对AI原生通信感知一体化（ISAC）系统缺乏统一评估体系的问题，本文提出了一套统一的系统架构与评估方法。该方法考虑学习型智能体对感知、通信与控制的自适应调整，以及推理延迟、不确定性、环境动态和硬件非理想性对端到端性能的影响。它系统性地刻画了感知精度、通信可靠性与资源开销之间的基本权衡，为闭环ISAC系统的设计、评估与比较提供了可复用的方法框架。这对于军事作战中的感知与通信技术评估具有重要的参考价值。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "military intelligent agent applications and architectures",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.22525v1",
+      "source": "arxiv",
+      "title": "Explainable Reinforcement Learning for assisting Air Traffic Controllers",
+      "abstract": "To effectively integrate AI into high-stakes, critical environments such as healthcare, autonomous driving, and aviation--and to advance toward higher levels of automation and seamless human-AI collaboration--building trust in AI-driven solutions is essential. Trust, in turn, is closely linked to the explainability of AI systems. The rapid advancements in AI across various domains have underscored the challenges of establishing trust, raising increasing interest in AI explainability even more when applied to deep learning. In this context, the present work aims to explore the application of explainability techniques to Reinforcement Learning (RL) algorithms, specifically within the safety-critical domain of Air Traffic Control (ATC). Using a simplified ATC environment as an initial testbed, an intelligent agent is trained with a reinforcement learning algorithm to make decisions on alternative flight routes that avoid no-fly zones. As a preliminary explainability approach, a saliency map is employed, providing insights into the input features that most significantly influence the agent's decision-making process.",
+      "authors": [
+        "Anduel Mehmeti",
+        "Gabriella Gigante",
+        "Salvatore Venticinque"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-24T17:56:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.22525v1",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:ai-papers",
+        "query:military-AI"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Explainable RL for assisting air traffic controllers offers a transferable human-AI decision support method for high-stakes military decision-making",
+      "llm_evidence_cn": "面向空中交通管制员的可解释强化学习可为高利害军事决策提供可迁移的人机智能决策支持方法",
+      "llm_evidence": "面向空中交通管制员的可解释强化学习可为高利害军事决策提供可迁移的人机智能决策支持方法",
+      "canonical_evidence": "面向空中交通管制员的可解释强化学习可为高利害军事决策提供可迁移的人机智能决策支持方法",
+      "llm_tldr_en": "Applying explainability to reinforcement learning for air traffic control assistance, this work addresses trust in high-stakes AI. The approach is transferable to military decision-making and command-and-control systems.",
+      "llm_tldr_cn": "在高风险领域应用AI需建立信任，而信任依赖可解释性。本文面向空中交通管制这一安全关键场景，将可解释性技术应用于强化学习算法，在简化环境中分析AI辅助决策的依据并评估透明化效果。结果显示可解释性有助于提升操作员对AI建议的理解与接受度，为人机协同决策提供可迁移框架，对军事指挥控制与决策支持具有借鉴意义。",
+      "llm_tldr": "在高风险领域应用AI需建立信任，而信任依赖可解释性。本文面向空中交通管制这一安全关键场景，将可解释性技术应用于强化学习算法，在简化环境中分析AI辅助决策的依据并评估透明化效果。结果显示可解释性有助于提升操作员对AI建议的理解与接受度，为人机协同决策提供可迁移框架，对军事指挥控制与决策支持具有借鉴意义。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "intelligent support for military decision-making processes",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.18115v1",
+      "source": "arxiv",
+      "title": "Compositional Semantic Communication for Physical AI: Category Theory Meets Game Theory",
+      "abstract": "Physical artificial intelligence (AI) systems involve distributed sensing agents with embedded AI models that must coordinate to perceive, reason, and act in networked environments. Transmitting raw sensor data incurs significant communication overhead, latency, and redundancy. While semantic communication (SC) mitigates these challenges by transmitting task-relevant information, existing deep learning-based joint source-channel coding approaches exhibit limited adaptability, poor out-of-distribution generalization, and scalability challenges. To address these limitations, this paper proposes a framework for compositional semantic communication (CSC), enabling heterogeneous physical AI sources to transmit semantic representations (SRs) that compose meaningfully at a base station (BS) or edge server for remote inference. First, a category-theoretic measure of compositional semantics is developed to quantify each device's contribution to inference tasks beyond mutual information. Second, Grothendieck topologies and presheaves formalize semantic composition across devices, ensuring consistency and task relevance. Building on these foundations, multi-device coordination is formulated as a Stackelberg game in which devices commit to encoding strategies and the BS optimally composes received SRs. An ADMM-based algorithm computes equilibrium signaling strategies. Equilibrium existence is established under mild conditions and is Pareto optimal when compositional information yields increasing collective benefit. Simulation results demonstrate that the proposed approach achieves up to 17% bandwidth reduction and 53% lower end-to-end latency than cooperative multi-agent, distributed gradient descent, and uniform-selection CSC baselines while maintaining 85% inference accuracy across diverse autonomous driving scenarios.",
+      "authors": [
+        "Christo Kurisummoottil Thomas",
+        "Walid Saad",
+        "Emilio Calvanese Strinati"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT",
+        "cs.GT",
+        "eess.SP"
+      ],
+      "published": "2026-07-20T16:10:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.18115v1",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:ai-papers",
+        "query:military-AI"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Enables distributed sensing agents coordination via semantic communication, relevant to military situation awareness",
+      "llm_evidence_cn": "通过语义通信支持分布式感知智能体协同，可应用于军事态势感知",
+      "llm_evidence": "通过语义通信支持分布式感知智能体协同，可应用于军事态势感知",
+      "canonical_evidence": "通过语义通信支持分布式感知智能体协同，可应用于军事态势感知",
+      "llm_tldr_en": "Semantic communication for physical AI: proposes compositional semantic communication (CSC) using category theory and game theory. CSC enables heterogeneous sensing agents to share semantic representations, improving generalization and scalability. Relevant to multi-agent military situation awareness.",
+      "llm_tldr_cn": "物理AI系统由分布式感知智能体组成，需要在网络环境中协调感知、推理与行动，但现有语义通信方法适应性差、可扩展性有限。本文提出基于范畴论与博弈论的合成语义通信（CSC）框架，让异构物理AI源能够传输语义表示。该方法克服了联合源信道编码的局限，提高了泛化能力和可扩展性，可为军事侦察与态势感知中的多智能体协作提供底层通信支撑。",
+      "llm_tldr": "物理AI系统由分布式感知智能体组成，需要在网络环境中协调感知、推理与行动，但现有语义通信方法适应性差、可扩展性有限。本文提出基于范畴论与博弈论的合成语义通信（CSC）框架，让异构物理AI源能够传输语义表示。该方法克服了联合源信道编码的局限，提高了泛化能力和可扩展性，可为军事侦察与态势感知中的多智能体协作提供底层通信支撑。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "artificial intelligence for military situation awareness",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.23438v1",
+      "source": "arxiv",
+      "title": "Separating Capability from Permission: A Governance Framework for Agentic AI Autonomy Levels",
+      "abstract": "As AI systems increasingly exhibit agentic behavior, discussions of autonomy often conflate what systems are technically capable of doing with what they should be permitted to do in practice. This paper introduces a governance framework that explicitly separates Allowed Autonomy Levels (AAL), which define the degree of autonomy an AI agent is authorized to exercise given risk, oversight, and accountability considerations, from Autonomous Capability Levels (ACL), which characterize an agent's inherent technical abilities. We present a structured set of autonomy levels spanning reactive execution, decision support, supervised action, goal-directed autonomy, and delegated operational authority, and describe how control, reversibility, and accountability change as autonomy increases. To operationalize this framework, we propose a risk-aware decision process for assigning allowed autonomy, analyze how risk and accountability evolve across autonomy levels, and demonstrate its application through a deployed enterprise data engineering agent, illustrating how a system assessed at a high capability level can be deliberately constrained to a lower allowed autonomy based on risk, reversibility, and organizational readiness. By distinguishing authorization from capability, this work provides practical guidance for the design, deployment, and governance of Agentic AI systems.",
+      "authors": [
+        "Haining Zheng",
+        "Qian Dong",
+        "Rodolfo K. Depena",
+        "Jonathan D. Bhatia",
+        "Feng Xiao",
+        "Peng Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CY",
+        "cs.MA"
+      ],
+      "published": "2026-07-26T03:32:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.23438v1",
+      "tags": [
+        "keyword:military-AI",
+        "query:ai-papers",
+        "query:military-AI"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Governance framework separating allowed from capability autonomy, with delegated operational authority levels; directly applicable to military command and control with AI",
+      "llm_evidence_cn": "提出区分允许自治与能力自治的治理框架，涵盖授权作战权限等级，可直接应用于军事AI指挥控制",
+      "llm_evidence": "提出区分允许自治与能力自治的治理框架，涵盖授权作战权限等级，可直接应用于军事AI指挥控制",
+      "canonical_evidence": "提出区分允许自治与能力自治的治理框架，涵盖授权作战权限等级，可直接应用于军事AI指挥控制",
+      "llm_tldr_en": "Introduces a governance framework separating Allowed Autonomy Levels from Autonomous Capability Levels, spanning reactive execution to delegated operational authority; highly relevant to military command and control with AI.",
+      "llm_tldr_cn": "针对智能体自主性讨论中能力与权限混淆的问题，本文提出区分允许自治水平与能力自治水平的治理框架。框架涵盖反应式执行、决策支持、监督行动、目标导向自主与授权作战权限等层级，并讨论控制与可逆性。该框架为不同风险场景下设定AI自主权限提供结构化方法。对军事领域智能指挥控制与自主系统的权限设计具有重要参考意义。",
+      "llm_tldr": "针对智能体自主性讨论中能力与权限混淆的问题，本文提出区分允许自治水平与能力自治水平的治理框架。框架涵盖反应式执行、决策支持、监督行动、目标导向自主与授权作战权限等层级，并讨论控制与可逆性。该框架为不同风险场景下设定AI自主权限提供结构化方法。对军事领域智能指挥控制与自主系统的权限设计具有重要参考意义。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "military command and control with AI",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.23870v1",
+      "source": "arxiv",
+      "title": "MulRobBench: A Decision-Level Benchmark for Safe and Security-Policy-Compliant Multimodal UAV Agents",
+      "abstract": "Smart-city airspace is transforming Uncrewed Aerial Vehicles (UAVs) from passive sensing platforms into cyber-physical decision makers that must follow operational rules under degraded observations and ambiguous language. Existing UAV and multimodal benchmarks evaluate perception, navigation, collaboration, and reasoning, but few assess whether physical evidence, protocol constraints, and action risk remain coupled during critical decisions. We introduce MulRobBench, an offline, protocol-conditioned benchmark for Vision-Language-Action (VLA) UAV agents in smart-city environments. MulRobBench integrates real UAV multimodal observations, protocol-level security policies, and action-level cyber-physical safety into a unified evaluation framework. The benchmark contains 3,024 samples spanning 17 task taxonomy nodes and 12 scoring dimensions across four stages: operational context understanding, multimodal evidence arbitration, degradation-aware reasoning, and risk-aware action planning. Evaluation combines semantic scoring with structural diagnostics, including policy compliance, format compliance, unsafe actions, parsing failures, and dimension-level validity. Across 17 multimodal models, the best semantic protocol-decision score reaches only 0.5141, while the best strict mean scoring-dimension accuracy is 0.1599. A controlled 20-anchor modality-ablation study changes 4-15 action selections per model, confirming that both visual and textual inputs influence decisions. Analysis identifies modality-trust selection, constraint extraction, glare, missing data, and operator shorthand as the primary causes of decision instability. MulRobBench provides a reproducible benchmark for trustworthy multimodal UAV decision making under realistic operational constraints.",
+      "authors": [
+        "Belal S. Alsinglawi",
+        "Weizheng Wang",
+        "Junyi Wu",
+        "Yi Jiang",
+        "Lianhai Lin",
+        "Merouane Debbah",
+        "Izzat Alsmadi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-07-26T22:23:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.23870v1",
+      "tags": [
+        "keyword:ai-papers",
+        "keyword:military-AI",
+        "query:military-AI"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Presents MulRobBench, a decision-level benchmark for multimodal UAV agents that couples physical evidence, protocol constraints, and action risk",
+      "llm_evidence_cn": "提出面向多模态无人机智能体的决策级基准MulRobBench，将物理证据、协议约束与行动风险耦合",
+      "llm_evidence": "提出面向多模态无人机智能体的决策级基准MulRobBench，将物理证据、协议约束与行动风险耦合",
+      "canonical_evidence": "提出面向多模态无人机智能体的决策级基准MulRobBench，将物理证据、协议约束与行动风险耦合",
+      "llm_tldr_en": "Presents MulRobBench, a protocol-conditioned decision-level benchmark for vision-language-action UAV agents. It couples physical evidence, protocol constraints, and action risk, integrating real observations, security policies, and cyber-physical safety into a unified evaluation.",
+      "llm_tldr_cn": "针对现有无人机及多模态基准缺乏对决策层面安全与协议合规的评估问题，本文提出了MulRobBench，一个面向视觉-语言-动作（VLA）无人机智能体的离线、协议条件化决策级基准。该基准将真实无人机多模态观测、协议级安全策略和动作级网络物理安全统一起来，评估智能体在关键决策中是否始终结合物理证据、协议约束与行动风险。它为无人机在复杂规则约束环境中的安全自主决策提供了系统化评测工具，对军事无人机应用具有重要意义。",
+      "llm_tldr": "针对现有无人机及多模态基准缺乏对决策层面安全与协议合规的评估问题，本文提出了MulRobBench，一个面向视觉-语言-动作（VLA）无人机智能体的离线、协议条件化决策级基准。该基准将真实无人机多模态观测、协议级安全策略和动作级网络物理安全统一起来，评估智能体在关键决策中是否始终结合物理证据、协议约束与行动风险。它为无人机在复杂规则约束环境中的安全自主决策提供了系统化评测工具，对军事无人机应用具有重要意义。",
+      "llm_tags": [
+        "query:military-ai"
+      ],
+      "matched_query_tag": "query:military-ai",
+      "matched_query_text": "intelligent warfare and autonomous systems",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
